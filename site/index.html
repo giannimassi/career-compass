@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Career Compass — a copy-paste prompt that turns ChatGPT or Claude into a thoughtful career advisor. Free. No signup.">
+<title>Career Compass</title>
+<style>
+  :root {
+    --bg: #fdfcf8;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --accent: #2b5a4a;
+    --accent-ink: #fff;
+    --line: #e8e4d8;
+    --code-bg: #f5f1e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --ink: #f0ede3;
+      --ink-soft: #b8b2a2;
+      --accent: #5fb294;
+      --accent-ink: #0b1a15;
+      --line: #2d2d2d;
+      --code-bg: #232323;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.55;
+    font-size: 17px;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 1.4rem 4rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.02em;
+  }
+  .tagline {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin: 0 0 2rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 2.4rem 0 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  p { margin: 0 0 1rem; }
+  ol { padding-left: 1.4rem; }
+  li { margin-bottom: 0.6rem; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  a:hover { text-decoration: none; }
+  .lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px;
+    margin: 0 0 2rem;
+    font-size: 0.9rem;
+  }
+  .lang-toggle button {
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 999px;
+    font: inherit;
+  }
+  .lang-toggle button.active {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .copy-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 1.4rem 0 0.4rem;
+  }
+  button.copy {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: 0;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 60ms ease, opacity 120ms ease;
+  }
+  button.copy:hover { opacity: 0.92; }
+  button.copy:active { transform: scale(0.99); }
+  button.copy.ok { background: #4a8a6d; }
+  .open-links {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+  .open-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 10px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.95rem;
+    background: var(--bg);
+  }
+  .open-links a:hover { border-color: var(--accent); color: var(--accent); }
+  .note {
+    background: var(--code-bg);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin: 1.4rem 0;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink-soft); }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+
+<div class="lang-toggle" role="group" aria-label="Language">
+  <button id="lang-en" class="active" onclick="setLang('en')">English</button>
+  <button id="lang-it" onclick="setLang('it')">Italiano</button>
+</div>
+
+<!-- EN -->
+<section id="copy-en">
+  <h1>Career Compass</h1>
+  <p class="tagline">A copy-paste prompt that turns ChatGPT or Claude into a thoughtful career advisor. Free. No signup.</p>
+
+  <h2>What to do</h2>
+  <ol>
+    <li>Click <strong>Copy the prompt</strong> below.</li>
+    <li>Open <strong>ChatGPT</strong> or <strong>Claude</strong>.</li>
+    <li>Paste into a new conversation and start talking — in your own language.</li>
+  </ol>
+
+  <div class="copy-row">
+    <button class="copy" onclick="copyPrompt('en')" id="btn-en">📋 Copy the prompt</button>
+    <div class="open-links">
+      <a href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT →</a>
+      <a href="https://claude.ai" target="_blank" rel="noopener">Open Claude →</a>
+    </div>
+  </div>
+
+  <h2>Who it's for</h2>
+  <p>People re-entering work after a gap, recently out of a job, changing direction, or just unsure what's next. Not tech-specific. Works in any language you write in.</p>
+
+  <h2>What you get</h2>
+  <p>A structured conversation that starts by figuring out where you actually are in your search, then helps you produce one or two concrete things you can act on this week. At the end, a <em>Session Summary</em> you save and paste back at the start of the next conversation — so you can pick up where you left off.</p>
+
+  <div class="note">
+    <strong>Privacy:</strong> This is a plain text prompt. Your conversation stays inside your AI account — nothing goes to me, there's no backend.
+  </div>
+
+  <h2>Tips</h2>
+  <ul>
+    <li>Works best with web search enabled in your AI tool (usually on by default).</li>
+    <li>It will <strong>not</strong> rewrite your CV. It tells you specific changes to make yourself.</li>
+    <li>It will <strong>not</strong> mass-apply for you. It will help you apply to 5 roles well.</li>
+  </ul>
+
+  <h2>More</h2>
+  <ul>
+    <li><a href="https://github.com/giannimassi/career-compass" target="_blank" rel="noopener">GitHub repository</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">How it works</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" target="_blank" rel="noopener">Privacy</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" target="_blank" rel="noopener">Example session</a></li>
+  </ul>
+</section>
+
+<!-- IT -->
+<section id="copy-it" class="hidden">
+  <h1>Career Compass</h1>
+  <p class="tagline">Un prompt da copiare e incollare che trasforma ChatGPT o Claude in un consulente di carriera attento. Gratis. Senza registrazione.</p>
+
+  <h2>Come si usa</h2>
+  <ol>
+    <li>Clicca <strong>Copia il prompt</strong> qui sotto.</li>
+    <li>Apri <strong>ChatGPT</strong> o <strong>Claude</strong>.</li>
+    <li>Incolla in una nuova conversazione e inizia a scrivere — nella tua lingua.</li>
+  </ol>
+
+  <div class="copy-row">
+    <button class="copy" onclick="copyPrompt('it')" id="btn-it">📋 Copia il prompt</button>
+    <div class="open-links">
+      <a href="https://chatgpt.com" target="_blank" rel="noopener">Apri ChatGPT →</a>
+      <a href="https://claude.ai" target="_blank" rel="noopener">Apri Claude →</a>
+    </div>
+  </div>
+
+  <h2>Per chi è</h2>
+  <p>Chi sta tornando al lavoro dopo una pausa, chi è stato licenziato di recente, chi sta cambiando direzione o non sa cosa fare dopo. Non è specifico per il settore tech. Funziona in qualunque lingua tu scriva.</p>
+
+  <h2>Cosa ottieni</h2>
+  <p>Una conversazione strutturata che parte dal capire dove sei davvero nella tua ricerca, poi ti aiuta a produrre una o due cose concrete su cui agire questa settimana. Alla fine, un <em>riepilogo della sessione</em> che salvi e reincolli all'inizio della prossima conversazione, così riprendi da dove avevi lasciato.</p>
+
+  <div class="note">
+    <strong>Privacy:</strong> È solo un testo. La conversazione resta nel tuo account AI — niente arriva a me, non c'è nessun backend.
+  </div>
+
+  <h2>Consigli</h2>
+  <ul>
+    <li>Funziona meglio con la ricerca web attiva nel tuo strumento AI (di solito è attiva di default).</li>
+    <li><strong>Non</strong> riscriverà il tuo CV. Ti dirà quali modifiche fare tu stesso.</li>
+    <li><strong>Non</strong> farà candidature automatiche. Ti aiuterà a candidarti a 5 ruoli bene.</li>
+  </ul>
+
+  <h2>Per saperne di più</h2>
+  <ul>
+    <li><a href="https://github.com/giannimassi/career-compass" target="_blank" rel="noopener">Repository GitHub</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">Come funziona</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" target="_blank" rel="noopener">Privacy</a></li>
+    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" target="_blank" rel="noopener">Esempio di sessione</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>
+    <a href="https://github.com/giannimassi/career-compass">GitHub</a> · MIT License · Made with care
+  </p>
+</footer>
+
+</main>
+
+<script>
+  let PROMPT_TEXT = null;
+
+  async function loadPrompt() {
+    if (PROMPT_TEXT) return PROMPT_TEXT;
+    try {
+      const r = await fetch('./prompt.md');
+      if (!r.ok) throw new Error('prompt fetch failed');
+      PROMPT_TEXT = await r.text();
+    } catch (e) {
+      try {
+        const r2 = await fetch('https://raw.githubusercontent.com/giannimassi/career-compass/main/prompt.md');
+        PROMPT_TEXT = await r2.text();
+      } catch (e2) {
+        PROMPT_TEXT = null;
+      }
+    }
+    return PROMPT_TEXT;
+  }
+
+  async function copyPrompt(lang) {
+    const btn = document.getElementById('btn-' + lang);
+    const text = await loadPrompt();
+    if (!text) {
+      btn.textContent = lang === 'en' ? 'Could not load — open prompt.md on GitHub' : 'Errore — apri prompt.md su GitHub';
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = lang === 'en' ? '✓ Copied — now paste into ChatGPT or Claude' : '✓ Copiato — incolla in ChatGPT o Claude';
+      btn.classList.add('ok');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('ok');
+      }, 3500);
+    } catch (e) {
+      btn.textContent = lang === 'en' ? 'Press Ctrl/Cmd+C to copy' : 'Premi Ctrl/Cmd+C per copiare';
+    }
+  }
+
+  function setLang(lang) {
+    document.getElementById('copy-en').classList.toggle('hidden', lang !== 'en');
+    document.getElementById('copy-it').classList.toggle('hidden', lang !== 'it');
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-it').classList.toggle('active', lang === 'it');
+    try { localStorage.setItem('cc-lang', lang); } catch (e) {}
+  }
+
+  (function init() {
+    try {
+      const saved = localStorage.getItem('cc-lang');
+      if (saved) { setLang(saved); return; }
+    } catch (e) {}
+    const nav = (navigator.language || '').toLowerCase();
+    if (nav.startsWith('it')) setLang('it');
+  })();
+
+  loadPrompt();
+</script>
+</body>
+</html>

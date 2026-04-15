@@ -115,7 +115,9 @@
     margin: 0 0 1rem;
     color: var(--ink);
     text-wrap: balance;
-    hyphens: auto;
+    hyphens: manual;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
   h1.hero-hook .highlight {
     background: linear-gradient(120deg, var(--warm-soft) 0%, var(--warm-soft) 100%);
@@ -155,11 +157,14 @@
     display: none; /* hide decorative line for now */
   }
   .mock-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     color: var(--ink-softer);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
+    text-align: center;
+    font-weight: 500;
+    opacity: 0.8;
   }
   .bubble {
     max-width: 84%;
@@ -182,14 +187,14 @@
     border-bottom-left-radius: 4px;
   }
   .bubble-role {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     color: var(--ink-softer);
-    margin-bottom: 0.25rem;
-    font-weight: 600;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    opacity: 0.75;
   }
-
   /* Sections */
   section { margin: 2.6rem 0; }
   h2 {
@@ -209,9 +214,15 @@
   /* LLM grid */
   .llm-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.7rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
     margin: 1.4rem 0 0.5rem;
+  }
+  @media (max-width: 600px) {
+    .llm-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 380px) {
+    .llm-grid { grid-template-columns: repeat(2, 1fr); }
   }
   .llm-btn {
     display: flex;
@@ -512,7 +523,7 @@ const STRINGS = {
   it: {
     lang: "Italiano",
     dir: "ltr",
-    heroHook: ["Ti senti bloccato? ", { h: "Probabilmente non dipende da te" }, "."],
+    heroHook: ["Ti senti bloccato? Probabilmente ", { h: "non dipende da te" }, "."],
     heroSub: "Career Compass è un consulente di carriera gratuito, senza registrazione, che usi direttamente in ChatGPT, Claude o qualsiasi altra chat AI. Prima capisce dove sei davvero, poi ti indica una o due cose concrete da fare questa settimana. Niente fuffa. La tua lingua. Il tuo ritmo.",
     mockLabel: "Com'è un primo scambio",
     bubbleRoleYou: "Tu",

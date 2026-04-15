@@ -80,7 +80,7 @@ Status: Stuck
 Confidence: high — consistent over the session
 Stage delta [*]: N/A — first session
 
-PERSON PROFILE [*]
+PROFESSIONAL CONTEXT [*]
 - 34yo, 8 years in B2B SaaS marketing, recently fired after 60-hour week burnout
 - Compensation floor: 70k. Non-negotiable PTO/hours boundary.
 - Differentiator: scaled marketing through two product pivots (rare among peers at this level)

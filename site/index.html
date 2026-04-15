@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Career Compass — a copy-paste prompt that turns ChatGPT or Claude into a thoughtful career advisor. Free. No signup.">
+<meta name="description" content="Career Compass — a free, no-signup prompt that turns ChatGPT, Claude, Gemini, and other AI chats into a thoughtful career advisor.">
 <title>Career Compass</title>
 <style>
   :root {
@@ -36,10 +36,11 @@
     line-height: 1.55;
     font-size: 17px;
   }
+  body[dir="rtl"] ol, body[dir="rtl"] ul { padding-right: 1.4rem; padding-left: 0; }
   main {
     max-width: 680px;
     margin: 0 auto;
-    padding: 3rem 1.4rem 4rem;
+    padding: 2rem 1.4rem 4rem;
   }
   h1 {
     font-size: 2.2rem;
@@ -57,71 +58,80 @@
     letter-spacing: -0.01em;
   }
   p { margin: 0 0 1rem; }
-  ol { padding-left: 1.4rem; }
+  ol, ul { padding-left: 1.4rem; }
   li { margin-bottom: 0.6rem; }
   a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   a:hover { text-decoration: none; }
-  .lang-toggle {
-    display: inline-flex;
+  .topbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.6rem;
+  }
+  .lang-select {
+    background: var(--bg);
+    color: var(--ink);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 3px;
-    margin: 0 0 2rem;
-    font-size: 0.9rem;
-  }
-  .lang-toggle button {
-    border: 0;
-    background: transparent;
-    color: var(--ink-soft);
-    padding: 6px 14px;
-    cursor: pointer;
-    border-radius: 999px;
+    padding: 6px 12px;
     font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
   }
-  .lang-toggle button.active {
-    background: var(--accent);
-    color: var(--accent-ink);
+  .llm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.6rem;
+    margin: 1.2rem 0 0.6rem;
   }
-  .copy-row {
+  .llm-btn {
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin: 1.4rem 0 0.4rem;
-  }
-  button.copy {
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 14px 12px;
     background: var(--accent);
     color: var(--accent-ink);
     border: 0;
-    padding: 14px 20px;
+    border-radius: 10px;
     font-size: 1rem;
     font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 60ms ease, opacity 120ms ease;
+  }
+  .llm-btn:hover { opacity: 0.92; text-decoration: none; }
+  .llm-btn:active { transform: scale(0.99); }
+  .llm-btn .provider { font-weight: 700; }
+  .or-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 1.2rem 0 0.6rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .or-row::before, .or-row::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--line);
+  }
+  button.copy {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
     border-radius: 10px;
     cursor: pointer;
     font-family: inherit;
-    transition: transform 60ms ease, opacity 120ms ease;
+    width: 100%;
+    transition: border-color 120ms ease, color 120ms ease;
   }
-  button.copy:hover { opacity: 0.92; }
-  button.copy:active { transform: scale(0.99); }
-  button.copy.ok { background: #4a8a6d; }
-  .open-links {
-    display: flex;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-top: 0.6rem;
-  }
-  .open-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 10px 16px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    text-decoration: none;
-    color: var(--ink);
-    font-size: 0.95rem;
-    background: var(--bg);
-  }
-  .open-links a:hover { border-color: var(--accent); color: var(--accent); }
+  button.copy:hover { border-color: var(--accent); color: var(--accent); }
+  button.copy.ok { background: #4a8a6d; color: #fff; border-color: #4a8a6d; }
   .note {
     background: var(--code-bg);
     padding: 12px 16px;
@@ -129,6 +139,28 @@
     color: var(--ink-soft);
     font-size: 0.9rem;
     margin: 1.4rem 0;
+  }
+  .disclaimer {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .toast {
+    margin-top: 0.8rem;
+    padding: 10px 14px;
+    background: #4a8a6d;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
   footer {
     margin-top: 3rem;
@@ -138,176 +170,631 @@
     color: var(--ink-soft);
   }
   footer a { color: var(--ink-soft); }
-  .hidden { display: none; }
 </style>
 </head>
 <body>
 <main>
 
-<div class="lang-toggle" role="group" aria-label="Language">
-  <button id="lang-en" class="active" onclick="setLang('en')">English</button>
-  <button id="lang-it" onclick="setLang('it')">Italiano</button>
+<div class="topbar">
+  <select class="lang-select" id="lang-select" aria-label="Language"></select>
 </div>
 
-<!-- EN -->
-<section id="copy-en">
-  <h1>Career Compass</h1>
-  <p class="tagline">A copy-paste prompt that turns ChatGPT or Claude into a thoughtful career advisor. Free. No signup.</p>
+<h1 id="title">Career Compass</h1>
+<p class="tagline" id="tagline"></p>
 
-  <h2>What to do</h2>
-  <ol>
-    <li>Click <strong>Copy the prompt</strong> below.</li>
-    <li>Open <strong>ChatGPT</strong> or <strong>Claude</strong>.</li>
-    <li>Paste into a new conversation and start talking — in your own language.</li>
-  </ol>
+<h2 id="howto-heading"></h2>
+<ol id="howto-steps"></ol>
 
-  <div class="copy-row">
-    <button class="copy" onclick="copyPrompt('en')" id="btn-en">📋 Copy the prompt</button>
-    <div class="open-links">
-      <a href="https://chatgpt.com" target="_blank" rel="noopener">Open ChatGPT →</a>
-      <a href="https://claude.ai" target="_blank" rel="noopener">Open Claude →</a>
-    </div>
-  </div>
+<div class="llm-grid" id="llm-grid"></div>
+<div class="disclaimer" id="llm-hint"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <h2>Who it's for</h2>
-  <p>People re-entering work after a gap, recently out of a job, changing direction, or just unsure what's next. Not tech-specific. Works in any language you write in.</p>
+<div class="or-row"><span id="or-label"></span></div>
 
-  <h2>What you get</h2>
-  <p>A structured conversation that starts by figuring out where you actually are in your search, then helps you produce one or two concrete things you can act on this week. At the end, a <em>Session Summary</em> you save and paste back at the start of the next conversation — so you can pick up where you left off.</p>
+<button class="copy" id="copy-btn" onclick="copyPrompt()"></button>
+<div class="disclaimer" id="copy-hint"></div>
 
-  <div class="note">
-    <strong>Privacy:</strong> This is a plain text prompt. Your conversation stays inside your AI account — nothing goes to me, there's no backend.
-  </div>
+<h2 id="who-heading"></h2>
+<p id="who-body"></p>
 
-  <h2>Tips</h2>
-  <ul>
-    <li>Works best with web search enabled in your AI tool (usually on by default).</li>
-    <li>It will <strong>not</strong> rewrite your CV. It tells you specific changes to make yourself.</li>
-    <li>It will <strong>not</strong> mass-apply for you. It will help you apply to 5 roles well.</li>
-  </ul>
+<h2 id="what-heading"></h2>
+<p id="what-body"></p>
 
-  <h2>More</h2>
-  <ul>
-    <li><a href="https://github.com/giannimassi/career-compass" target="_blank" rel="noopener">GitHub repository</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">How it works</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" target="_blank" rel="noopener">Privacy</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" target="_blank" rel="noopener">Example session</a></li>
-  </ul>
-</section>
+<div class="note" id="privacy-note"></div>
 
-<!-- IT -->
-<section id="copy-it" class="hidden">
-  <h1>Career Compass</h1>
-  <p class="tagline">Un prompt da copiare e incollare che trasforma ChatGPT o Claude in un consulente di carriera attento. Gratis. Senza registrazione.</p>
+<h2 id="tips-heading"></h2>
+<ul id="tips-list"></ul>
 
-  <h2>Come si usa</h2>
-  <ol>
-    <li>Clicca <strong>Copia il prompt</strong> qui sotto.</li>
-    <li>Apri <strong>ChatGPT</strong> o <strong>Claude</strong>.</li>
-    <li>Incolla in una nuova conversazione e inizia a scrivere — nella tua lingua.</li>
-  </ol>
-
-  <div class="copy-row">
-    <button class="copy" onclick="copyPrompt('it')" id="btn-it">📋 Copia il prompt</button>
-    <div class="open-links">
-      <a href="https://chatgpt.com" target="_blank" rel="noopener">Apri ChatGPT →</a>
-      <a href="https://claude.ai" target="_blank" rel="noopener">Apri Claude →</a>
-    </div>
-  </div>
-
-  <h2>Per chi è</h2>
-  <p>Chi sta tornando al lavoro dopo una pausa, chi è stato licenziato di recente, chi sta cambiando direzione o non sa cosa fare dopo. Non è specifico per il settore tech. Funziona in qualunque lingua tu scriva.</p>
-
-  <h2>Cosa ottieni</h2>
-  <p>Una conversazione strutturata che parte dal capire dove sei davvero nella tua ricerca, poi ti aiuta a produrre una o due cose concrete su cui agire questa settimana. Alla fine, un <em>riepilogo della sessione</em> che salvi e reincolli all'inizio della prossima conversazione, così riprendi da dove avevi lasciato.</p>
-
-  <div class="note">
-    <strong>Privacy:</strong> È solo un testo. La conversazione resta nel tuo account AI — niente arriva a me, non c'è nessun backend.
-  </div>
-
-  <h2>Consigli</h2>
-  <ul>
-    <li>Funziona meglio con la ricerca web attiva nel tuo strumento AI (di solito è attiva di default).</li>
-    <li><strong>Non</strong> riscriverà il tuo CV. Ti dirà quali modifiche fare tu stesso.</li>
-    <li><strong>Non</strong> farà candidature automatiche. Ti aiuterà a candidarti a 5 ruoli bene.</li>
-  </ul>
-
-  <h2>Per saperne di più</h2>
-  <ul>
-    <li><a href="https://github.com/giannimassi/career-compass" target="_blank" rel="noopener">Repository GitHub</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" target="_blank" rel="noopener">Come funziona</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" target="_blank" rel="noopener">Privacy</a></li>
-    <li><a href="https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" target="_blank" rel="noopener">Esempio di sessione</a></li>
-  </ul>
-</section>
+<h2 id="more-heading"></h2>
+<ul id="more-links"></ul>
 
 <footer>
-  <p>
-    <a href="https://github.com/giannimassi/career-compass">GitHub</a> · MIT License · Made with care
-  </p>
+  <p id="footer-text"></p>
 </footer>
 
 </main>
 
 <script>
-  let PROMPT_TEXT = null;
+// --- LLM chat targets ---
+// Each button copies the prompt to the clipboard AND opens the chat in a new
+// tab. User pastes (Cmd/Ctrl+V) once in the new tab. URL pre-fill (`?q=`) is
+// unreliable across providers (some removed it, some never supported it,
+// some auto-submit), so we use the copy+open pattern uniformly — simpler,
+// honest, works everywhere.
+const LLMS = [
+  { id: "chatgpt", name: "ChatGPT", href: "https://chatgpt.com/" },
+  { id: "claude",  name: "Claude",  href: "https://claude.ai/new" },
+  { id: "gemini",  name: "Gemini",  href: "https://gemini.google.com/app" },
+  { id: "grok",    name: "Grok",    href: "https://grok.com/" },
+  { id: "copilot", name: "Copilot", href: "https://copilot.microsoft.com/" },
+];
 
-  async function loadPrompt() {
-    if (PROMPT_TEXT) return PROMPT_TEXT;
+// --- Translations ---
+const STRINGS = {
+  en: {
+    lang: "English",
+    dir: "ltr",
+    tagline: "A free, no-signup prompt that turns ChatGPT, Claude, Gemini, and other AI chats into a thoughtful career advisor.",
+    howto: "How to use it",
+    steps: [
+      "Pick your AI below.",
+      "Paste the prompt (Cmd/Ctrl+V) in the chat that opens, then start talking in your own language.",
+      "At the end, save the Session Summary so a future conversation can pick up where you left off."
+    ],
+    or: "or",
+    llmHint: "Each button copies the prompt and opens the chat in a new tab — just paste (Cmd/Ctrl+V) there.",
+    llmCopied: "✓ Copied — paste it into the {provider} tab with Cmd/Ctrl+V",
+    copyBtn: "Copy the prompt and paste it manually",
+    copyHint: "Use this if the buttons above don't open your preferred AI, or if you want to see the prompt first.",
+    copied: "✓ Copied — now paste it into any AI chat",
+    copyFailed: "Could not load the prompt. Open prompt.md on GitHub.",
+    copyPressToCopy: "Press Ctrl/Cmd+C to copy",
+    who: "Who it's for",
+    whoBody: "People re-entering work after a gap, recently out of a job, changing direction, or unsure what's next. Not tech-specific. Works in any language you write in. Intended for adults (18+).",
+    what: "What you get",
+    whatBody: "A structured conversation that starts by understanding where you actually are, then helps you produce one or two concrete things you can act on this week. At the end, a Session Summary you save and paste back at the start of the next conversation — so you can continue later.",
+    privacy: "Privacy: your conversation stays inside your AI account. Nothing comes to me, there is no backend. The advisor will adapt its style to how you talk — it will tell you what it's noticing if you ask.",
+    tips: "Tips",
+    tipsList: [
+      "Works best when web access is enabled in your AI tool (usually on by default).",
+      "It won't rewrite your CV for you. It tells you what to change yourself — AI-written CVs fail in interviews.",
+      "It won't mass-apply for you. It will help you apply to a small number of roles well."
+    ],
+    more: "More",
+    links: [
+      { label: "GitHub repository",  href: "https://github.com/giannimassi/career-compass" },
+      { label: "How it works",       href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privacy",            href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Example session",    href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · MIT License · Made with care"
+  },
+
+  it: {
+    lang: "Italiano",
+    dir: "ltr",
+    tagline: "Un prompt gratuito, senza registrazione, che trasforma ChatGPT, Claude, Gemini e altre chat AI in un consulente di carriera attento.",
+    howto: "Come si usa",
+    steps: [
+      "Scegli la tua AI qui sotto.",
+      "Incolla il prompt (Cmd/Ctrl+V) nella chat che si apre, poi inizia a parlare nella tua lingua.",
+      "Alla fine, salva il Riepilogo di Sessione così la prossima conversazione riparte da dove hai lasciato."
+    ],
+    or: "oppure",
+    llmHint: "Ogni pulsante copia il prompt e apre la chat in una nuova scheda — basta incollare lì (Cmd/Ctrl+V).",
+    llmCopied: "✓ Copiato — incollalo nella scheda {provider} con Cmd/Ctrl+V",
+    copyBtn: "Copia il prompt e incollalo a mano",
+    copyHint: "Usa questa opzione se i pulsanti sopra non aprono la tua AI preferita, o se vuoi vedere il prompt prima di usarlo.",
+    copied: "✓ Copiato — ora incollalo in una chat AI",
+    copyFailed: "Impossibile caricare il prompt. Apri prompt.md su GitHub.",
+    copyPressToCopy: "Premi Ctrl/Cmd+C per copiare",
+    who: "Per chi è",
+    whoBody: "Chi sta tornando al lavoro dopo una pausa, chi è stato licenziato di recente, chi sta cambiando direzione o non sa cosa fare dopo. Non è solo per il tech. Funziona in qualsiasi lingua tu scriva. Pensato per adulti (18+).",
+    what: "Cosa ottieni",
+    whatBody: "Una conversazione strutturata che parte dal capire dove sei davvero, poi ti aiuta a produrre una o due cose concrete su cui agire questa settimana. Alla fine, un Riepilogo di Sessione da salvare e reincollare all'inizio della prossima conversazione, così puoi continuare dopo.",
+    privacy: "Privacy: la conversazione resta nel tuo account AI. Niente arriva a me, non c'è alcun backend. Il consulente adatta il suo stile a come parli — se glielo chiedi, ti dice cosa sta notando.",
+    tips: "Consigli",
+    tipsList: [
+      "Funziona meglio con la ricerca web attiva nel tuo strumento AI (di solito è attiva di default).",
+      "Non riscriverà il tuo CV al posto tuo. Ti dirà cosa cambiare — i CV scritti dall'AI non reggono ai colloqui.",
+      "Non farà candidature di massa. Ti aiuterà a candidarti bene a pochi ruoli mirati."
+    ],
+    more: "Per saperne di più",
+    links: [
+      { label: "Repository GitHub", href: "https://github.com/giannimassi/career-compass" },
+      { label: "Come funziona",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privacy",           href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Esempio di sessione", href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Licenza MIT · Fatto con cura"
+  },
+
+  es: {
+    lang: "Español",
+    dir: "ltr",
+    tagline: "Un prompt gratuito, sin registro, que convierte ChatGPT, Claude, Gemini y otros chats de IA en un asesor profesional atento.",
+    howto: "Cómo usarlo",
+    steps: [
+      "Elige tu IA abajo.",
+      "Pega el prompt (Cmd/Ctrl+V) en el chat que se abre y empieza a conversar en tu idioma.",
+      "Al final, guarda el Resumen de Sesión para retomar la conversación después."
+    ],
+    or: "o bien",
+    llmHint: "Cada botón copia el prompt y abre el chat en una nueva pestaña — solo pégalo ahí (Cmd/Ctrl+V).",
+    llmCopied: "✓ Copiado — pégalo en la pestaña de {provider} con Cmd/Ctrl+V",
+    copyBtn: "Copiar el prompt y pegarlo manualmente",
+    copyHint: "Usa esta opción si los botones de arriba no abren tu IA preferida, o si prefieres ver el prompt antes.",
+    copied: "✓ Copiado — ahora pégalo en cualquier chat de IA",
+    copyFailed: "No se pudo cargar el prompt. Abre prompt.md en GitHub.",
+    copyPressToCopy: "Pulsa Ctrl/Cmd+C para copiar",
+    who: "Para quién es",
+    whoBody: "Personas que vuelven al trabajo tras una pausa, recién despedidas, cambiando de rumbo o sin saber qué sigue. No es solo para tecnología. Funciona en cualquier idioma que escribas. Para adultos (18+).",
+    what: "Qué obtienes",
+    whatBody: "Una conversación estructurada que empieza por entender dónde estás realmente, y luego te ayuda a producir una o dos cosas concretas que puedas hacer esta semana. Al final, un Resumen de Sesión que guardas y pegas al inicio de la siguiente conversación — para continuar donde lo dejaste.",
+    privacy: "Privacidad: tu conversación se queda dentro de tu cuenta de IA. Nada llega a mí, no hay ningún backend. El asesor adapta su estilo a cómo hablas — si le preguntas, te dice qué está notando.",
+    tips: "Consejos",
+    tipsList: [
+      "Funciona mejor con el acceso web activado en tu herramienta de IA (normalmente está activo por defecto).",
+      "No reescribirá tu CV por ti. Te dirá qué cambiar tú mismo — los CV escritos por IA fallan en las entrevistas.",
+      "No enviará candidaturas masivas. Te ayudará a postularte bien a pocos puestos elegidos con cuidado."
+    ],
+    more: "Más información",
+    links: [
+      { label: "Repositorio en GitHub", href: "https://github.com/giannimassi/career-compass" },
+      { label: "Cómo funciona",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privacidad",            href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Sesión de ejemplo",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Licencia MIT · Hecho con cuidado"
+  },
+
+  fr: {
+    lang: "Français",
+    dir: "ltr",
+    tagline: "Un prompt gratuit, sans inscription, qui transforme ChatGPT, Claude, Gemini et d'autres chats d'IA en conseiller de carrière attentif.",
+    howto: "Comment l'utiliser",
+    steps: [
+      "Choisissez votre IA ci-dessous.",
+      "Collez le prompt (Cmd/Ctrl+V) dans le chat qui s'ouvre, puis commencez à parler dans votre langue.",
+      "À la fin, enregistrez le Résumé de Session pour reprendre la conversation plus tard."
+    ],
+    or: "ou",
+    llmHint: "Chaque bouton copie le prompt et ouvre le chat dans un nouvel onglet — il suffit de coller là (Cmd/Ctrl+V).",
+    llmCopied: "✓ Copié — collez-le dans l'onglet {provider} avec Cmd/Ctrl+V",
+    copyBtn: "Copier le prompt et le coller manuellement",
+    copyHint: "Utilisez cette option si les boutons ci-dessus n'ouvrent pas votre IA préférée, ou si vous voulez voir le prompt avant.",
+    copied: "✓ Copié — collez-le maintenant dans n'importe quel chat d'IA",
+    copyFailed: "Impossible de charger le prompt. Ouvrez prompt.md sur GitHub.",
+    copyPressToCopy: "Appuyez sur Ctrl/Cmd+C pour copier",
+    who: "Pour qui",
+    whoBody: "Personnes qui retournent au travail après une pause, récemment licenciées, en changement de direction, ou incertaines de la suite. Pas seulement la tech. Fonctionne dans n'importe quelle langue que vous écrivez. Pour adultes (18+).",
+    what: "Ce que vous obtenez",
+    whatBody: "Une conversation structurée qui commence par comprendre où vous en êtes vraiment, puis vous aide à produire une ou deux choses concrètes à faire cette semaine. À la fin, un Résumé de Session que vous enregistrez et recollez au début de la prochaine conversation — pour continuer où vous en étiez.",
+    privacy: "Confidentialité : votre conversation reste dans votre compte IA. Rien ne m'arrive, il n'y a aucun backend. Le conseiller adapte son style à votre manière de parler — si vous lui demandez, il vous dit ce qu'il remarque.",
+    tips: "Conseils",
+    tipsList: [
+      "Fonctionne mieux quand l'accès web est activé dans votre outil IA (souvent activé par défaut).",
+      "Il ne réécrira pas votre CV. Il vous dira quoi changer vous-même — les CV écrits par l'IA ne tiennent pas en entretien.",
+      "Il ne fera pas de candidatures en masse. Il vous aidera à postuler à quelques postes bien choisis."
+    ],
+    more: "Pour aller plus loin",
+    links: [
+      { label: "Dépôt GitHub",        href: "https://github.com/giannimassi/career-compass" },
+      { label: "Comment ça marche",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Confidentialité",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Exemple de session",  href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Licence MIT · Fait avec soin"
+  },
+
+  de: {
+    lang: "Deutsch",
+    dir: "ltr",
+    tagline: "Ein kostenloser Prompt ohne Anmeldung, der ChatGPT, Claude, Gemini und andere KI-Chats in einen aufmerksamen Karriere-Berater verwandelt.",
+    howto: "So geht's",
+    steps: [
+      "Wähle unten deine KI.",
+      "Füge den Prompt (Cmd/Strg+V) in den Chat ein, der sich öffnet, und sprich dann los — in deiner eigenen Sprache.",
+      "Am Ende: speichere die Session-Zusammenfassung, damit du später weitermachen kannst."
+    ],
+    or: "oder",
+    llmHint: "Jeder Button kopiert den Prompt und öffnet den Chat in einem neuen Tab — einfach dort einfügen (Cmd/Strg+V).",
+    llmCopied: "✓ Kopiert — füge ihn im {provider}-Tab mit Cmd/Strg+V ein",
+    copyBtn: "Prompt kopieren und manuell einfügen",
+    copyHint: "Nutze das, falls die Buttons oben deine KI nicht öffnen oder du den Prompt vorher sehen möchtest.",
+    copied: "✓ Kopiert — jetzt in einen KI-Chat einfügen",
+    copyFailed: "Prompt konnte nicht geladen werden. Öffne prompt.md auf GitHub.",
+    copyPressToCopy: "Drücke Strg/Cmd+C zum Kopieren",
+    who: "Für wen",
+    whoBody: "Menschen, die nach einer Pause wieder einsteigen, gerade den Job verloren haben, die Richtung ändern oder nicht wissen, wie es weitergeht. Nicht nur für Tech. Funktioniert in jeder Sprache, die du schreibst. Für Erwachsene (18+).",
+    what: "Was du bekommst",
+    whatBody: "Ein strukturiertes Gespräch, das zuerst versteht, wo du wirklich stehst, und dir dann hilft, ein oder zwei konkrete Schritte für diese Woche zu finden. Am Ende eine Session-Zusammenfassung, die du speicherst und beim nächsten Mal wieder einfügst — so kannst du dort weitermachen, wo du aufgehört hast.",
+    privacy: "Datenschutz: dein Gespräch bleibt in deinem KI-Konto. Nichts kommt zu mir, es gibt kein Backend. Der Berater passt seinen Ton an deine Art zu reden an — wenn du fragst, sagt er dir, was er bemerkt.",
+    tips: "Tipps",
+    tipsList: [
+      "Funktioniert am besten mit aktiviertem Web-Zugriff in deinem KI-Tool (meist standardmäßig an).",
+      "Er schreibt deinen Lebenslauf nicht um. Er sagt dir, was du selbst ändern sollst — KI-geschriebene Lebensläufe fallen im Gespräch auf.",
+      "Er bewirbt dich nicht automatisch auf 50 Stellen. Er hilft dir, dich bei wenigen, gut gewählten Stellen richtig zu bewerben."
+    ],
+    more: "Mehr erfahren",
+    links: [
+      { label: "GitHub-Repository", href: "https://github.com/giannimassi/career-compass" },
+      { label: "So funktioniert es", href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Datenschutz",        href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Beispiel-Session",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · MIT-Lizenz · Mit Sorgfalt gemacht"
+  },
+
+  ro: {
+    lang: "Română",
+    dir: "ltr",
+    tagline: "Un prompt gratuit, fără înregistrare, care transformă ChatGPT, Claude, Gemini și alte chat-uri AI într-un consilier de carieră atent.",
+    howto: "Cum se folosește",
+    steps: [
+      "Alege AI-ul tău mai jos.",
+      "Lipește promptul (Cmd/Ctrl+V) în chatul care se deschide și începe să vorbești în limba ta.",
+      "La final, salvează Rezumatul Sesiunii ca să poți relua conversația mai târziu."
+    ],
+    or: "sau",
+    llmHint: "Fiecare buton copiază promptul și deschide chatul într-o filă nouă — doar lipește acolo (Cmd/Ctrl+V).",
+    llmCopied: "✓ Copiat — lipește-l în fila {provider} cu Cmd/Ctrl+V",
+    copyBtn: "Copiază promptul și lipește-l manual",
+    copyHint: "Folosește asta dacă butoanele de sus nu-ți deschid AI-ul preferat sau dacă vrei să vezi promptul înainte.",
+    copied: "✓ Copiat — acum lipește-l în orice chat AI",
+    copyFailed: "Nu s-a putut încărca promptul. Deschide prompt.md pe GitHub.",
+    copyPressToCopy: "Apasă Ctrl/Cmd+C pentru a copia",
+    who: "Pentru cine este",
+    whoBody: "Oameni care se întorc la muncă după o pauză, recent concediați, care își schimbă direcția sau nu știu ce urmează. Nu doar pentru tech. Funcționează în orice limbă scrii. Pentru adulți (18+).",
+    what: "Ce primești",
+    whatBody: "O conversație structurată care începe prin a înțelege unde ești cu adevărat, apoi te ajută să ajungi la unul-două pași concreți pentru săptămâna asta. La final, un Rezumat al Sesiunii pe care îl salvezi și îl lipești la începutul următoarei conversații — ca să continui de unde ai rămas.",
+    privacy: "Confidențialitate: conversația rămâne în contul tău AI. Nimic nu ajunge la mine, nu există niciun server. Consilierul își adaptează stilul la felul tău de a vorbi — dacă îl întrebi, îți spune ce observă.",
+    tips: "Sfaturi",
+    tipsList: [
+      "Funcționează cel mai bine cu accesul la web activ în instrumentul AI (de obicei e activ implicit).",
+      "Nu-ți va rescrie CV-ul. Îți spune ce să schimbi singur — CV-urile scrise de AI se prăbușesc la interviu.",
+      "Nu va aplica în masă pentru tine. Te ajută să aplici bine la câteva roluri alese cu grijă."
+    ],
+    more: "Mai multe",
+    links: [
+      { label: "Depozit GitHub",     href: "https://github.com/giannimassi/career-compass" },
+      { label: "Cum funcționează",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Confidențialitate",  href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Exemplu de sesiune", href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Licență MIT · Făcut cu grijă"
+  },
+
+  uk: {
+    lang: "Українська",
+    dir: "ltr",
+    tagline: "Безкоштовний промпт без реєстрації, який перетворює ChatGPT, Claude, Gemini та інші AI-чати на уважного кар'єрного радника.",
+    howto: "Як користуватися",
+    steps: [
+      "Обери AI нижче.",
+      "Встав промпт (Cmd/Ctrl+V) у чат, що відкриється, і починай розмову своєю мовою.",
+      "У кінці збережи Підсумок Сесії, щоб продовжити з того ж місця наступного разу."
+    ],
+    or: "або",
+    llmHint: "Кожна кнопка копіює промпт і відкриває чат у новій вкладці — просто встав там (Cmd/Ctrl+V).",
+    llmCopied: "✓ Скопійовано — встав у вкладку {provider} через Cmd/Ctrl+V",
+    copyBtn: "Скопіювати промпт і вставити вручну",
+    copyHint: "Скористайся цим, якщо кнопки зверху не відкривають твій AI, або якщо хочеш спочатку побачити промпт.",
+    copied: "✓ Скопійовано — тепер встав у будь-який AI-чат",
+    copyFailed: "Не вдалося завантажити промпт. Відкрий prompt.md на GitHub.",
+    copyPressToCopy: "Натисни Ctrl/Cmd+C щоб скопіювати",
+    who: "Для кого",
+    whoBody: "Люди, які повертаються до роботи після перерви, нещодавно втратили роботу, змінюють напрямок або не знають, що далі. Не лише для IT. Працює будь-якою мовою, якою ти пишеш. Для дорослих (18+).",
+    what: "Що ти отримаєш",
+    whatBody: "Структуровану розмову, яка спочатку розбирається, де ти насправді перебуваєш, а потім допомагає визначити одну-дві конкретні речі, які можна зробити цього тижня. У кінці — Підсумок Сесії, який ти зберігаєш і вставляєш на початку наступної розмови, щоб продовжити звідти, де зупинився.",
+    privacy: "Приватність: розмова залишається у твоєму AI-акаунті. Нічого не потрапляє до мене, немає ніякого сервера. Радник підлаштовує свій стиль під те, як ти говориш — якщо запитаєш, він скаже, що помічає.",
+    tips: "Поради",
+    tipsList: [
+      "Краще працює, коли у твоєму AI-інструменті увімкнено доступ до інтернету (зазвичай увімкнено за замовчуванням).",
+      "Не перепише тобі резюме. Скаже, що змінити самому — резюме, написані AI, провалюються на співбесіді.",
+      "Не подаватиме заявки масово. Допоможе подати заявки добре на кілька ретельно вибраних вакансій."
+    ],
+    more: "Більше",
+    links: [
+      { label: "Репозиторій GitHub",  href: "https://github.com/giannimassi/career-compass" },
+      { label: "Як це працює",        href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Приватність",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Приклад сесії",       href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Ліцензія MIT · Зроблено з турботою"
+  },
+
+  sq: {
+    lang: "Shqip",
+    dir: "ltr",
+    tagline: "Një prompt falas, pa regjistrim, që e kthen ChatGPT, Claude, Gemini dhe biseda të tjera AI në një këshilltar karriere të vëmendshëm.",
+    howto: "Si përdoret",
+    steps: [
+      "Zgjidh AI-në tënde më poshtë.",
+      "Ngjit promptin (Cmd/Ctrl+V) në bisedën që hapet dhe fillo të flasësh në gjuhën tënde.",
+      "Në fund, ruaje Përmbledhjen e Seancës që bisedën ta vazhdosh më vonë."
+    ],
+    or: "ose",
+    llmHint: "Çdo buton e kopjon promptin dhe hap bisedën në një skedë të re — thjesht ngjiteni aty (Cmd/Ctrl+V).",
+    llmCopied: "✓ U kopjua — ngjite në skedën e {provider} me Cmd/Ctrl+V",
+    copyBtn: "Kopjo promptin dhe ngjite me dorë",
+    copyHint: "Përdoreni këtë nëse butonat më sipër nuk hapin AI-në tuaj, ose nëse doni ta shihni promptin më parë.",
+    copied: "✓ U kopjua — ngjite në çdo bisedë AI",
+    copyFailed: "Nuk u ngarkua promptin. Hapni prompt.md në GitHub.",
+    copyPressToCopy: "Shtypni Ctrl/Cmd+C për ta kopjuar",
+    who: "Për kë është",
+    whoBody: "Njerëz që rikthehen në punë pas një pauze, që sapo kanë humbur punën, që po ndryshojnë drejtimin, ose që nuk dinë çfarë vijon. Jo vetëm për teknologjinë. Funksionon në çdo gjuhë që shkruani. Për të rritur (18+).",
+    what: "Çfarë merr",
+    whatBody: "Një bisedë e strukturuar që nis duke kuptuar se ku jeni vërtet, pastaj ju ndihmon të prodhoni një ose dy gjëra konkrete për këtë javë. Në fund, një Përmbledhje Seance që e ruani dhe e ngjitni në fillim të bisedës së ardhshme — që të vazhdoni nga aty ku lini.",
+    privacy: "Privatësia: biseda juaj mbetet brenda llogarisë tuaj AI. Asgjë nuk më vjen mua, nuk ka backend. Këshilltari përshtatet me mënyrën si flisni — nëse e pyesni, ju thotë çfarë po vëren.",
+    tips: "Këshilla",
+    tipsList: [
+      "Funksionon më mirë me aksesin në internet të aktivizuar në mjetin tuaj AI (zakonisht është aktiv si parazgjedhje).",
+      "Nuk do t'ju rishkruajë CV-në. Ju thotë çfarë të ndryshoni ju vetë — CV-të e shkruara nga AI dështojnë në intervista.",
+      "Nuk do të aplikojë masivisht. Ju ndihmon të aplikoni mirë në pak role të zgjedhura me kujdes."
+    ],
+    more: "Më shumë",
+    links: [
+      { label: "Depoja GitHub",      href: "https://github.com/giannimassi/career-compass" },
+      { label: "Si funksionon",      href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privatësia",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Shembull seance",    href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · Licenca MIT · E bërë me kujdes"
+  },
+
+  ar: {
+    lang: "العربية",
+    dir: "rtl",
+    tagline: "موجِّه مجاني وبدون تسجيل، يحوِّل ChatGPT و Claude و Gemini ومحادثات الذكاء الاصطناعي الأخرى إلى مستشار مهني مدروس.",
+    howto: "كيف تستخدمه",
+    steps: [
+      "اختر الذكاء الاصطناعي أدناه.",
+      "الصق الموجِّه (Cmd/Ctrl+V) في المحادثة التي تفتح، ثم ابدأ الحديث بلغتك الخاصة.",
+      "في النهاية، احفظ ملخَّص الجلسة لتتمكن من استئناف المحادثة لاحقاً."
+    ],
+    or: "أو",
+    llmHint: "كل زر ينسخ الموجِّه ويفتح المحادثة في علامة تبويب جديدة — ما عليك سوى لصقه هناك (Cmd/Ctrl+V).",
+    llmCopied: "✓ تم النسخ — الصقه في علامة تبويب {provider} باستخدام Cmd/Ctrl+V",
+    copyBtn: "انسخ الموجِّه والصقه يدوياً",
+    copyHint: "استخدم هذا إذا لم تفتح الأزرار أعلاه مساعدك المفضَّل، أو إذا أردت رؤية الموجِّه أولاً.",
+    copied: "✓ تم النسخ — الصقه الآن في أي محادثة ذكاء اصطناعي",
+    copyFailed: "تعذَّر تحميل الموجِّه. افتح prompt.md على GitHub.",
+    copyPressToCopy: "اضغط Ctrl/Cmd+C للنسخ",
+    who: "لمن هذا",
+    whoBody: "للأشخاص العائدين إلى العمل بعد انقطاع، أو الذين فقدوا وظائفهم مؤخراً، أو الذين يغيِّرون مسارهم، أو غير المتأكدين ممَّا سيأتي. ليس مخصَّصاً للتقنية فقط. يعمل بأي لغة تكتب بها. للبالغين (18+).",
+    what: "ماذا تحصل",
+    whatBody: "محادثة منظَّمة تبدأ بفهم موقعك الحقيقي، ثم تساعدك على إنتاج شيء أو شيئين ملموسَين يمكنك تنفيذهما هذا الأسبوع. في النهاية، ملخَّص جلسة تحفظه وتلصقه في بداية المحادثة التالية — لتتمكَّن من المتابعة من حيث توقَّفت.",
+    privacy: "الخصوصية: محادثتك تبقى داخل حسابك على أداة الذكاء الاصطناعي. لا شيء يصلني، ولا يوجد خادم. يكيِّف المستشار أسلوبه مع طريقة حديثك — وإن سألته، أخبرك بما يلاحظه.",
+    tips: "نصائح",
+    tipsList: [
+      "يعمل بشكل أفضل عند تفعيل الوصول إلى الإنترنت في أداتك (عادةً مفعَّل افتراضياً).",
+      "لن يعيد كتابة سيرتك الذاتية. سيخبرك بما يجب تغييره بنفسك — السِّيَر التي يكتبها الذكاء الاصطناعي تفشل في المقابلات.",
+      "لن يقدِّم طلبات توظيف بالجملة. سيساعدك على التقديم جيداً لعدد قليل من الوظائف المختارة بعناية."
+    ],
+    more: "المزيد",
+    links: [
+      { label: "مستودع GitHub",    href: "https://github.com/giannimassi/career-compass" },
+      { label: "كيف يعمل",          href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "الخصوصية",          href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "مثال جلسة",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · رخصة MIT · صُنع باهتمام"
+  },
+
+  zh: {
+    lang: "中文",
+    dir: "ltr",
+    tagline: "一个免费、免注册的提示词，让 ChatGPT、Claude、Gemini 和其他 AI 聊天工具变成一位贴心的职业顾问。",
+    howto: "使用方法",
+    steps: [
+      "在下方选择你的 AI。",
+      "在打开的聊天窗口里粘贴提示词（Cmd/Ctrl+V），然后用你自己的语言开始对话。",
+      "结束时保存「会话摘要」，下次就能从上次结束的地方继续。"
+    ],
+    or: "或者",
+    llmHint: "每个按钮会复制提示词并在新标签页打开对话 —— 在新标签页里粘贴一下就好（Cmd/Ctrl+V）。",
+    llmCopied: "✓ 已复制 —— 在 {provider} 的标签页里用 Cmd/Ctrl+V 粘贴",
+    copyBtn: "复制提示词并手动粘贴",
+    copyHint: "如果上面的按钮打不开你常用的 AI,或者你想先看看提示词,就用这个。",
+    copied: "✓ 已复制 —— 现在粘贴到任意 AI 聊天中",
+    copyFailed: "无法加载提示词。请在 GitHub 上打开 prompt.md。",
+    copyPressToCopy: "按 Ctrl/Cmd+C 复制",
+    who: "适合谁",
+    whoBody: "适合休息一段时间后重新回到工作、最近失业、正在转换方向、或者不确定下一步的人。不限于技术行业。你用什么语言写,它就用什么语言回应。面向成年人(18+)。",
+    what: "你会得到什么",
+    whatBody: "一场有结构的对话,先弄清楚你现在到底处在什么位置,然后帮你定下一两件本周就能动手做的具体事情。最后会生成一份「会话摘要」,你保存起来,下次对话开始时粘贴进去 —— 这样就能从上次的地方接着聊。",
+    privacy: "隐私:你的对话留在你自己的 AI 账户里。没有任何内容发给我,也没有后端服务器。顾问会根据你说话的方式调整自己的语气 —— 你问它在注意什么,它会直接告诉你。",
+    tips: "小贴士",
+    tipsList: [
+      "在 AI 工具里开启联网访问时效果最好(通常默认就是开的)。",
+      "它不会帮你重写简历。它告诉你该自己改哪里 —— AI 写的简历在面试时撑不住。",
+      "它不会帮你批量投简历。它会帮你把少数几个精挑的岗位投得很好。"
+    ],
+    more: "更多",
+    links: [
+      { label: "GitHub 仓库",     href: "https://github.com/giannimassi/career-compass" },
+      { label: "工作原理",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "隐私说明",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "会话示例",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+    ],
+    footer: "GitHub · MIT 许可证 · 用心制作"
+  }
+};
+
+// --- State ---
+let CURRENT_LANG = "en";
+let PROMPT_TEXT = null;
+
+// --- Prompt loading (for manual copy fallback) ---
+async function loadPrompt() {
+  if (PROMPT_TEXT) return PROMPT_TEXT;
+  try {
+    const r = await fetch('./prompt.md');
+    if (!r.ok) throw new Error('local fetch failed');
+    PROMPT_TEXT = await r.text();
+  } catch (e) {
     try {
-      const r = await fetch('./prompt.md');
-      if (!r.ok) throw new Error('prompt fetch failed');
-      PROMPT_TEXT = await r.text();
-    } catch (e) {
-      try {
-        const r2 = await fetch('https://raw.githubusercontent.com/giannimassi/career-compass/main/prompt.md');
-        PROMPT_TEXT = await r2.text();
-      } catch (e2) {
-        PROMPT_TEXT = null;
+      const r2 = await fetch('https://raw.githubusercontent.com/giannimassi/career-compass/main/prompt.md');
+      PROMPT_TEXT = await r2.text();
+    } catch (e2) {
+      PROMPT_TEXT = null;
+    }
+  }
+  return PROMPT_TEXT;
+}
+
+// --- Render ---
+function render(lang) {
+  const t = STRINGS[lang] || STRINGS.en;
+  CURRENT_LANG = lang;
+
+  document.documentElement.lang = lang;
+  document.body.dir = t.dir;
+
+  document.getElementById("tagline").textContent = t.tagline;
+  document.getElementById("howto-heading").textContent = t.howto;
+  document.getElementById("llm-hint").textContent = t.llmHint;
+  document.getElementById("or-label").textContent = t.or;
+  document.getElementById("copy-btn").textContent = t.copyBtn;
+  document.getElementById("copy-hint").textContent = t.copyHint;
+  document.getElementById("who-heading").textContent = t.who;
+  document.getElementById("who-body").textContent = t.whoBody;
+  document.getElementById("what-heading").textContent = t.what;
+  document.getElementById("what-body").textContent = t.whatBody;
+  document.getElementById("privacy-note").textContent = t.privacy;
+  document.getElementById("tips-heading").textContent = t.tips;
+  document.getElementById("more-heading").textContent = t.more;
+  document.getElementById("footer-text").textContent = t.footer;
+
+  // Steps
+  const ol = document.getElementById("howto-steps");
+  ol.innerHTML = "";
+  t.steps.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = s;
+    ol.appendChild(li);
+  });
+
+  // LLM buttons — each copies the prompt and opens the chat
+  const grid = document.getElementById("llm-grid");
+  grid.innerHTML = "";
+  LLMS.forEach(l => {
+    const a = document.createElement("a");
+    a.className = "llm-btn";
+    a.href = l.href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = l.name;
+    a.addEventListener("click", () => {
+      if (PROMPT_TEXT) {
+        navigator.clipboard.writeText(PROMPT_TEXT).catch(() => {});
+      } else {
+        // Not loaded yet — kick off load and copy when ready
+        loadPrompt().then(text => {
+          if (text) navigator.clipboard.writeText(text).catch(() => {});
+        });
       }
-    }
-    return PROMPT_TEXT;
+      showCopied(l.name);
+    });
+    grid.appendChild(a);
+  });
+
+  // Tips
+  const tipsUl = document.getElementById("tips-list");
+  tipsUl.innerHTML = "";
+  t.tipsList.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = s;
+    tipsUl.appendChild(li);
+  });
+
+  // Links
+  const moreUl = document.getElementById("more-links");
+  moreUl.innerHTML = "";
+  t.links.forEach(link => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = link.href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = link.label;
+    li.appendChild(a);
+    moreUl.appendChild(li);
+  });
+}
+
+// --- Toast after LLM button click ---
+let TOAST_TIMEOUT = null;
+function showCopied(providerName) {
+  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
+  const toast = document.getElementById("toast");
+  toast.textContent = t.llmCopied.replace("{provider}", providerName);
+  toast.classList.add("show");
+  if (TOAST_TIMEOUT) clearTimeout(TOAST_TIMEOUT);
+  TOAST_TIMEOUT = setTimeout(() => toast.classList.remove("show"), 5000);
+}
+
+// --- Copy full prompt ---
+async function copyPrompt() {
+  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
+  const btn = document.getElementById("copy-btn");
+  const text = await loadPrompt();
+  if (!text) {
+    btn.textContent = t.copyFailed;
+    return;
   }
-
-  async function copyPrompt(lang) {
-    const btn = document.getElementById('btn-' + lang);
-    const text = await loadPrompt();
-    if (!text) {
-      btn.textContent = lang === 'en' ? 'Could not load — open prompt.md on GitHub' : 'Errore — apri prompt.md su GitHub';
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      const original = btn.textContent;
-      btn.textContent = lang === 'en' ? '✓ Copied — now paste into ChatGPT or Claude' : '✓ Copiato — incolla in ChatGPT o Claude';
-      btn.classList.add('ok');
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.classList.remove('ok');
-      }, 3500);
-    } catch (e) {
-      btn.textContent = lang === 'en' ? 'Press Ctrl/Cmd+C to copy' : 'Premi Ctrl/Cmd+C per copiare';
-    }
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = t.copied;
+    btn.classList.add("ok");
+    setTimeout(() => {
+      btn.textContent = t.copyBtn;
+      btn.classList.remove("ok");
+    }, 3500);
+  } catch (e) {
+    btn.textContent = t.copyPressToCopy;
   }
+}
 
-  function setLang(lang) {
-    document.getElementById('copy-en').classList.toggle('hidden', lang !== 'en');
-    document.getElementById('copy-it').classList.toggle('hidden', lang !== 'it');
-    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-    document.getElementById('lang-it').classList.toggle('active', lang === 'it');
-    try { localStorage.setItem('cc-lang', lang); } catch (e) {}
-  }
+// --- Language selection ---
+function detectInitialLang() {
+  const params = new URLSearchParams(location.search);
+  const qp = params.get("lang");
+  if (qp && STRINGS[qp]) return qp;
+  try {
+    const saved = localStorage.getItem("cc-lang");
+    if (saved && STRINGS[saved]) return saved;
+  } catch (e) {}
+  const nav = (navigator.language || "").toLowerCase();
+  const base = nav.split("-")[0];
+  if (STRINGS[base]) return base;
+  return "en";
+}
 
-  (function init() {
-    try {
-      const saved = localStorage.getItem('cc-lang');
-      if (saved) { setLang(saved); return; }
-    } catch (e) {}
-    const nav = (navigator.language || '').toLowerCase();
-    if (nav.startsWith('it')) setLang('it');
-  })();
+function populateSelector() {
+  const sel = document.getElementById("lang-select");
+  Object.entries(STRINGS).forEach(([code, t]) => {
+    const opt = document.createElement("option");
+    opt.value = code;
+    opt.textContent = t.lang;
+    sel.appendChild(opt);
+  });
+  sel.value = CURRENT_LANG;
+  sel.addEventListener("change", (e) => {
+    const lang = e.target.value;
+    try { localStorage.setItem("cc-lang", lang); } catch (err) {}
+    render(lang);
+  });
+}
 
-  loadPrompt();
+// --- Init ---
+(function init() {
+  CURRENT_LANG = detectInitialLang();
+  render(CURRENT_LANG);
+  populateSelector();
+  loadPrompt(); // warm cache for copy-prompt button
+})();
 </script>
 </body>
 </html>

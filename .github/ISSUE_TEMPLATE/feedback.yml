@@ -1,0 +1,41 @@
+name: Feedback
+description: Tell me what worked, what broke, or what's missing.
+title: "[feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Honest is best — good, bad, broken, confusing, anything. You can write in any language.
+  - type: dropdown
+    id: usage
+    attributes:
+      label: How did you try it?
+      options:
+        - Tried it with ChatGPT
+        - Tried it with Claude
+        - Tried it with Gemini
+        - Tried it with Grok
+        - Tried it with Copilot
+        - Tried it with another AI
+        - Just read the page, haven't used it yet
+    validations:
+      required: false
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What do you want to share?
+      description: Describe what happened. What worked or didn't? What confused you? What would make it better?
+      placeholder: "It helped me realize... / I got stuck when... / The translation in X reads weird... / Idea: ..."
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Which language did you use? (optional)
+      placeholder: "English / Italian / Arabic / ..."
+  - type: input
+    id: about
+    attributes:
+      label: A sentence about you (optional)
+      description: Not required, but helps me understand who this is serving. E.g. "first-time job seeker", "re-entering after 6 months", "changing industry".

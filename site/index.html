@@ -3,27 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Career Compass — a free, no-signup prompt that turns ChatGPT, Claude, Gemini, and other AI chats into a thoughtful career advisor.">
-<title>Career Compass</title>
+<meta name="description" content="Career Compass — a free, no-signup prompt that turns ChatGPT, Claude, Gemini and other AI chats into a thoughtful career advisor. For anyone stuck, starting out, or starting over.">
+<meta property="og:title" content="Career Compass">
+<meta property="og:description" content="A thoughtful career advisor. Free, no signup. Inside any AI chat, in any language.">
+<meta property="og:type" content="website">
+<title>Career Compass · a thoughtful career advisor, free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fdfcf8;
+    --bg: #fbf7ee;
+    --bg-soft: #f4efe0;
+    --card: #ffffff;
     --ink: #1a1a1a;
-    --ink-soft: #4a4a4a;
+    --ink-soft: #5a5246;
+    --ink-softer: #7a7266;
     --accent: #2b5a4a;
     --accent-ink: #fff;
-    --line: #e8e4d8;
-    --code-bg: #f5f1e6;
+    --accent-soft: #e9f0eb;
+    --warm: #d4805c;
+    --warm-soft: #f7e6dc;
+    --line: #e6dfce;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(42,30,10,0.06);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1a1a1a;
-      --ink: #f0ede3;
-      --ink-soft: #b8b2a2;
-      --accent: #5fb294;
+      --bg: #15130f;
+      --bg-soft: #1f1c17;
+      --card: #1f1c17;
+      --ink: #f3ede0;
+      --ink-soft: #b8b1a0;
+      --ink-softer: #8a8478;
+      --accent: #6fbb9b;
       --accent-ink: #0b1a15;
-      --line: #2d2d2d;
-      --code-bg: #232323;
+      --accent-soft: #1d2a25;
+      --warm: #e89778;
+      --warm-soft: #2d2319;
+      --line: #2d2923;
+      --shadow: 0 1px 2px rgba(0,0,0,0.5), 0 12px 32px rgba(0,0,0,0.35);
     }
   }
   * { box-sizing: border-box; }
@@ -32,195 +50,400 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.55;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body[dir="rtl"] ol, body[dir="rtl"] ul { padding-right: 1.4rem; padding-left: 0; }
-  main {
-    max-width: 680px;
+  body[dir="rtl"] .bubble.user { align-self: flex-start; border-bottom-right-radius: 18px; border-bottom-left-radius: 4px; }
+  body[dir="rtl"] .bubble.advisor { align-self: flex-end; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
+
+  .page {
+    max-width: 760px;
     margin: 0 auto;
-    padding: 2rem 1.4rem 4rem;
+    padding: 1.4rem 1.4rem 4rem;
   }
-  h1 {
-    font-size: 2.2rem;
-    margin: 0 0 0.4rem;
-    letter-spacing: -0.02em;
-  }
-  .tagline {
-    color: var(--ink-soft);
-    font-size: 1.1rem;
-    margin: 0 0 2rem;
-  }
-  h2 {
-    font-size: 1.25rem;
-    margin: 2.4rem 0 0.6rem;
-    letter-spacing: -0.01em;
-  }
-  p { margin: 0 0 1rem; }
-  ol, ul { padding-left: 1.4rem; }
-  li { margin-bottom: 0.6rem; }
-  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-  a:hover { text-decoration: none; }
+
+  /* Topbar */
   .topbar {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1.6rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.2rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  .brand-mark {
+    display: inline-block;
+    width: 20px; height: 20px;
+    color: var(--warm);
   }
   .lang-select {
-    background: var(--bg);
+    background: var(--card);
     color: var(--ink);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 6px 12px;
+    padding: 6px 14px;
     font: inherit;
     font-size: 0.9rem;
     cursor: pointer;
+    box-shadow: var(--shadow);
   }
+
+  /* Hero */
+  .hero {
+    margin: 0.8rem 0 3rem;
+  }
+  h1.hero-hook {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(2.1rem, 6vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+    color: var(--ink);
+  }
+  h1.hero-hook .highlight {
+    background: linear-gradient(120deg, transparent 0%, transparent 10%, var(--warm-soft) 10%, var(--warm-soft) 90%, transparent 90%);
+    padding: 0 0.15em;
+    color: var(--ink);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+
+  /* Chat mockup card */
+  .mock {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.2rem 1.2rem 1.4rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    position: relative;
+  }
+  .mock::before {
+    content: "";
+    position: absolute;
+    top: 0.9rem; left: 1.2rem; right: 1.2rem;
+    height: 1px;
+    background: var(--line);
+    display: none; /* hide decorative line for now */
+  }
+  .mock-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-softer);
+    margin-bottom: 0.4rem;
+  }
+  .bubble {
+    max-width: 84%;
+    padding: 0.7rem 1rem;
+    border-radius: 18px;
+    line-height: 1.5;
+    font-size: 0.98rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .bubble.user {
+    align-self: flex-end;
+    background: var(--warm-soft);
+    color: var(--ink);
+    border-bottom-right-radius: 4px;
+  }
+  .bubble.advisor {
+    align-self: flex-start;
+    background: var(--accent-soft);
+    color: var(--ink);
+    border-bottom-left-radius: 4px;
+  }
+  .bubble-role {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-softer);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  /* Sections */
+  section { margin: 2.6rem 0; }
+  h2 {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: -0.015em;
+    margin: 0 0 0.9rem;
+    color: var(--ink);
+  }
+  p { margin: 0 0 1rem; }
+  ol, ul { padding-left: 1.4rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.6rem; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  a:hover { text-decoration: none; }
+
+  /* LLM grid */
   .llm-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.6rem;
-    margin: 1.2rem 0 0.6rem;
+    gap: 0.7rem;
+    margin: 1.4rem 0 0.5rem;
   }
   .llm-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    padding: 14px 12px;
+    padding: 16px 12px;
     background: var(--accent);
     color: var(--accent-ink);
     border: 0;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: 14px;
+    font-size: 1.02rem;
+    font-weight: 700;
     font-family: inherit;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    transition: transform 60ms ease, opacity 120ms ease;
+    box-shadow: var(--shadow);
+    transition: transform 120ms ease, box-shadow 180ms ease, filter 120ms ease;
+    will-change: transform;
   }
-  .llm-btn:hover { opacity: 0.92; text-decoration: none; }
-  .llm-btn:active { transform: scale(0.99); }
-  .llm-btn .provider { font-weight: 700; }
-  .or-row {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin: 1.2rem 0 0.6rem;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
+  .llm-btn:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 14px 32px rgba(42,30,10,0.1);
   }
-  .or-row::before, .or-row::after {
-    content: "";
-    flex: 1;
-    border-top: 1px solid var(--line);
-  }
-  button.copy {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--line);
-    padding: 12px 18px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: inherit;
-    width: 100%;
-    transition: border-color 120ms ease, color 120ms ease;
-  }
-  button.copy:hover { border-color: var(--accent); color: var(--accent); }
-  button.copy.ok { background: #4a8a6d; color: #fff; border-color: #4a8a6d; }
-  .note {
-    background: var(--code-bg);
-    padding: 12px 16px;
-    border-radius: 8px;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    margin: 1.4rem 0;
-  }
+  .llm-btn:active { transform: translateY(0); }
+
   .disclaimer {
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
+    margin-top: 0.6rem;
+    font-size: 0.88rem;
     color: var(--ink-soft);
   }
   .toast {
-    margin-top: 0.8rem;
+    margin: 0.8rem 0 0;
     padding: 10px 14px;
-    background: #4a8a6d;
-    color: #fff;
-    border-radius: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 10px;
     font-size: 0.95rem;
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity 180ms ease, transform 180ms ease;
     pointer-events: none;
+    box-shadow: var(--shadow);
   }
   .toast.show {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
-  footer {
-    margin-top: 3rem;
-    padding-top: 1.4rem;
+
+  /* Or divider */
+  .or-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 1.6rem 0 0.8rem;
+    color: var(--ink-softer);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .or-row::before, .or-row::after {
+    content: "";
+    flex: 1;
     border-top: 1px solid var(--line);
-    font-size: 0.9rem;
+  }
+
+  button.copy {
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 13px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    width: 100%;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+  button.copy:hover { border-color: var(--accent); color: var(--accent); }
+  button.copy.ok { background: #4a8a6d; color: #fff; border-color: #4a8a6d; }
+
+  /* Privacy note card */
+  .note {
+    background: var(--bg-soft);
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    border-left: 3px solid var(--accent);
+  }
+  body[dir="rtl"] .note {
+    border-left: 0;
+    border-right: 3px solid var(--accent);
+  }
+
+  /* Feedback card */
+  .feedback {
+    background: linear-gradient(145deg, var(--warm-soft), var(--bg-soft));
+    border-radius: 18px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .feedback h2 {
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .feedback p {
     color: var(--ink-soft);
   }
-  footer a { color: var(--ink-soft); }
+  .feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 18px;
+    background: var(--warm);
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.98rem;
+    margin-top: 0.6rem;
+    box-shadow: var(--shadow);
+    transition: transform 120ms ease, filter 120ms ease;
+  }
+  .feedback-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    text-decoration: none;
+  }
+  .feedback-btn svg { width: 18px; height: 18px; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.88rem;
+    color: var(--ink-softer);
+    text-align: center;
+  }
+  footer a { color: var(--ink-softer); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
-<main>
+<div class="page">
 
-<div class="topbar">
-  <select class="lang-select" id="lang-select" aria-label="Language"></select>
+  <div class="topbar">
+    <a class="brand" href="/">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M12 4 L14 12 L12 20 L10 12 Z" fill="currentColor"/>
+        <path d="M4 12 L12 10 L20 12 L12 14 Z" fill="currentColor" opacity="0.6"/>
+      </svg>
+      Career Compass
+    </a>
+    <select class="lang-select" id="lang-select" aria-label="Language"></select>
+  </div>
+
+  <section class="hero">
+    <h1 class="hero-hook" id="hero-hook"></h1>
+    <p class="hero-sub" id="hero-sub"></p>
+
+    <div class="mock" aria-hidden="false">
+      <div class="mock-label" id="mock-label"></div>
+      <div class="bubble user">
+        <div class="bubble-role" id="bubble-role-you"></div>
+        <div id="bubble-user"></div>
+      </div>
+      <div class="bubble advisor">
+        <div class="bubble-role" id="bubble-role-advisor"></div>
+        <div id="bubble-advisor"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="howto-heading"></h2>
+    <ol id="howto-steps"></ol>
+
+    <div class="llm-grid" id="llm-grid"></div>
+    <div class="disclaimer" id="llm-hint"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="or-row"><span id="or-label"></span></div>
+
+    <button class="copy" id="copy-btn" onclick="copyPrompt()"></button>
+    <div class="disclaimer" id="copy-hint"></div>
+  </section>
+
+  <section>
+    <h2 id="who-heading"></h2>
+    <p id="who-body"></p>
+  </section>
+
+  <section>
+    <h2 id="what-heading"></h2>
+    <p id="what-body"></p>
+  </section>
+
+  <div class="note" id="privacy-note"></div>
+
+  <section>
+    <h2 id="tips-heading"></h2>
+    <ul id="tips-list"></ul>
+  </section>
+
+  <section class="feedback">
+    <h2 id="feedback-heading"></h2>
+    <p id="feedback-body"></p>
+    <a class="feedback-btn" id="feedback-link" href="https://github.com/giannimassi/career-compass/issues/new?template=feedback.yml" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0.3a12 12 0 0 0-3.8 23.4c0.6 0.1 0.8-0.3 0.8-0.6v-2c-3.3 0.7-4-1.6-4-1.6-0.5-1.4-1.3-1.8-1.3-1.8-1.1-0.7 0.1-0.7 0.1-0.7 1.2 0.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 0.1-0.8 0.4-1.3 0.8-1.6-2.7-0.3-5.5-1.3-5.5-5.9 0-1.3 0.5-2.4 1.2-3.2-0.1-0.3-0.5-1.5 0.1-3.2 0 0 1-0.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.3 4 18.3 4.3 18.3 4.3c0.7 1.7 0.3 2.9 0.1 3.2 0.8 0.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9 0.4 0.4 0.8 1.1 0.8 2.2v3.3c0 0.3 0.2 0.7 0.8 0.6A12 12 0 0 0 12 0.3z"/></svg>
+      <span id="feedback-btn-label"></span>
+    </a>
+  </section>
+
+  <section>
+    <h2 id="more-heading"></h2>
+    <ul id="more-links"></ul>
+  </section>
+
+  <footer>
+    <p id="footer-text"></p>
+  </footer>
+
 </div>
-
-<h1 id="title">Career Compass</h1>
-<p class="tagline" id="tagline"></p>
-
-<h2 id="howto-heading"></h2>
-<ol id="howto-steps"></ol>
-
-<div class="llm-grid" id="llm-grid"></div>
-<div class="disclaimer" id="llm-hint"></div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<div class="or-row"><span id="or-label"></span></div>
-
-<button class="copy" id="copy-btn" onclick="copyPrompt()"></button>
-<div class="disclaimer" id="copy-hint"></div>
-
-<h2 id="who-heading"></h2>
-<p id="who-body"></p>
-
-<h2 id="what-heading"></h2>
-<p id="what-body"></p>
-
-<div class="note" id="privacy-note"></div>
-
-<h2 id="tips-heading"></h2>
-<ul id="tips-list"></ul>
-
-<h2 id="more-heading"></h2>
-<ul id="more-links"></ul>
-
-<footer>
-  <p id="footer-text"></p>
-</footer>
-
-</main>
 
 <script>
 // --- LLM chat targets ---
-// Each button copies the prompt to the clipboard AND opens the chat in a new
-// tab. User pastes (Cmd/Ctrl+V) once in the new tab. URL pre-fill (`?q=`) is
-// unreliable across providers (some removed it, some never supported it,
-// some auto-submit), so we use the copy+open pattern uniformly — simpler,
-// honest, works everywhere.
 const LLMS = [
   { id: "chatgpt", name: "ChatGPT", href: "https://chatgpt.com/" },
   { id: "claude",  name: "Claude",  href: "https://claude.ai/new" },
@@ -234,7 +457,13 @@ const STRINGS = {
   en: {
     lang: "English",
     dir: "ltr",
-    tagline: "A free, no-signup prompt that turns ChatGPT, Claude, Gemini, and other AI chats into a thoughtful career advisor.",
+    heroHook: ["Feeling stuck? It's probably ", { h: "not you" }, "."],
+    heroSub: "Career Compass is a free, no-signup career advisor you open inside ChatGPT, Claude, or any AI chat. It figures out where you really are before suggesting anything — then gives you one or two things you can actually do this week. No fluff. Your language. Your pace.",
+    mockLabel: "What a first exchange feels like",
+    bubbleRoleYou: "You",
+    bubbleRoleAdvisor: "Advisor",
+    bubbleUser: "I got laid off three months ago. Everyone tells me to apply harder. I'm exhausted and nothing's working.",
+    bubbleAdvisor: "That makes sense. Before I say anything — tell me where you are this week. Are you opening job sites and not clicking, clicking and not applying, or applying and not hearing back?",
     howto: "How to use it",
     steps: [
       "Pick your AI below.",
@@ -250,30 +479,39 @@ const STRINGS = {
     copyFailed: "Could not load the prompt. Open prompt.md on GitHub.",
     copyPressToCopy: "Press Ctrl/Cmd+C to copy",
     who: "Who it's for",
-    whoBody: "People re-entering work after a gap, recently out of a job, changing direction, or unsure what's next. Not tech-specific. Works in any language you write in. Intended for adults (18+).",
+    whoBody: "You, if you're re-entering work after a pause, just lost your job, trying to figure out what's next, or applying for the first time. Not tech-only. Works in whatever language you write in. For adults (18+).",
     what: "What you get",
-    whatBody: "A structured conversation that starts by understanding where you actually are, then helps you produce one or two concrete things you can act on this week. At the end, a Session Summary you save and paste back at the start of the next conversation — so you can continue later.",
+    whatBody: "A structured conversation that actually listens — starting by understanding where you really are, then helping you produce one or two specific things you can do this week. At the end, a Session Summary you save and paste into your next conversation, so you continue where you left off.",
     privacy: "Privacy: your conversation stays inside your AI account. Nothing comes to me, there is no backend. The advisor will adapt its style to how you talk — it will tell you what it's noticing if you ask.",
     tips: "Tips",
     tipsList: [
       "Works best when web access is enabled in your AI tool (usually on by default).",
-      "It won't rewrite your CV for you. It tells you what to change yourself — AI-written CVs fail in interviews.",
+      "It won't rewrite your CV for you. It tells you what to change yourself — AI-written CVs collapse in interviews.",
       "It won't mass-apply for you. It will help you apply to a small number of roles well."
     ],
+    feedbackHeading: "Help me make this better",
+    feedbackBody: "I'm building this openly. If something worked, broke, confused you, or would help someone you know — tell me. It takes 30 seconds.",
+    feedbackBtn: "Share feedback on GitHub",
     more: "More",
     links: [
-      { label: "GitHub repository",  href: "https://github.com/giannimassi/career-compass" },
-      { label: "How it works",       href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
-      { label: "Privacy",            href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
-      { label: "Example session",    href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+      { label: "GitHub repository", href: "https://github.com/giannimassi/career-compass" },
+      { label: "How it works",      href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privacy",           href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Example session",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · MIT License · Made with care"
+    footer: "MIT License · Made with care · Not medical or legal advice"
   },
 
   it: {
     lang: "Italiano",
     dir: "ltr",
-    tagline: "Un prompt gratuito, senza registrazione, che trasforma ChatGPT, Claude, Gemini e altre chat AI in un consulente di carriera attento.",
+    heroHook: ["Ti senti bloccato? Probabilmente ", { h: "non è colpa tua" }, "."],
+    heroSub: "Career Compass è un consulente di carriera gratuito, senza registrazione, che apri dentro ChatGPT, Claude o qualunque chat AI. Prima capisce dove sei davvero, poi ti dà una o due cose concrete da fare questa settimana. Niente fuffa. La tua lingua. Il tuo ritmo.",
+    mockLabel: "Com'è il primo scambio",
+    bubbleRoleYou: "Tu",
+    bubbleRoleAdvisor: "Consulente",
+    bubbleUser: "Sono stato licenziato tre mesi fa. Tutti mi dicono di candidarmi di più. Sono esausto e non funziona niente.",
+    bubbleAdvisor: "Ha senso. Prima di dirti qualsiasi cosa — dimmi dove sei questa settimana. Apri siti di lavoro e non clicchi, clicchi e non ti candidi, o ti candidi e non ti risponde nessuno?",
     howto: "Come si usa",
     steps: [
       "Scegli la tua AI qui sotto.",
@@ -289,30 +527,39 @@ const STRINGS = {
     copyFailed: "Impossibile caricare il prompt. Apri prompt.md su GitHub.",
     copyPressToCopy: "Premi Ctrl/Cmd+C per copiare",
     who: "Per chi è",
-    whoBody: "Chi sta tornando al lavoro dopo una pausa, chi è stato licenziato di recente, chi sta cambiando direzione o non sa cosa fare dopo. Non è solo per il tech. Funziona in qualsiasi lingua tu scriva. Pensato per adulti (18+).",
+    whoBody: "Per te, se stai tornando al lavoro dopo una pausa, hai appena perso il lavoro, stai cercando di capire cosa fare dopo, o cerchi per la prima volta. Non è solo per il tech. Funziona in qualsiasi lingua tu scriva. Per adulti (18+).",
     what: "Cosa ottieni",
-    whatBody: "Una conversazione strutturata che parte dal capire dove sei davvero, poi ti aiuta a produrre una o due cose concrete su cui agire questa settimana. Alla fine, un Riepilogo di Sessione da salvare e reincollare all'inizio della prossima conversazione, così puoi continuare dopo.",
+    whatBody: "Una conversazione strutturata che ascolta davvero — parte dal capire dove sei, poi ti aiuta a tirare fuori una o due cose specifiche da fare questa settimana. Alla fine, un Riepilogo di Sessione da salvare e reincollare nella prossima chat, così riparti da dove eri.",
     privacy: "Privacy: la conversazione resta nel tuo account AI. Niente arriva a me, non c'è alcun backend. Il consulente adatta il suo stile a come parli — se glielo chiedi, ti dice cosa sta notando.",
     tips: "Consigli",
     tipsList: [
       "Funziona meglio con la ricerca web attiva nel tuo strumento AI (di solito è attiva di default).",
-      "Non riscriverà il tuo CV al posto tuo. Ti dirà cosa cambiare — i CV scritti dall'AI non reggono ai colloqui.",
+      "Non riscriverà il tuo CV al posto tuo. Ti dirà cosa cambiare — i CV scritti dall'AI crollano ai colloqui.",
       "Non farà candidature di massa. Ti aiuterà a candidarti bene a pochi ruoli mirati."
     ],
+    feedbackHeading: "Aiutami a migliorarlo",
+    feedbackBody: "Lo sto costruendo alla luce del sole. Se qualcosa ha funzionato, si è rotto, ti ha confuso, o aiuterebbe qualcuno che conosci — dimmelo. Ci vogliono 30 secondi.",
+    feedbackBtn: "Lascia un feedback su GitHub",
     more: "Per saperne di più",
     links: [
-      { label: "Repository GitHub", href: "https://github.com/giannimassi/career-compass" },
-      { label: "Come funziona",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
-      { label: "Privacy",           href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
-      { label: "Esempio di sessione", href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+      { label: "Repository GitHub",     href: "https://github.com/giannimassi/career-compass" },
+      { label: "Come funziona",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Privacy",               href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Esempio di sessione",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Licenza MIT · Fatto con cura"
+    footer: "Licenza MIT · Fatto con cura · Non sostituisce consulenza medica o legale"
   },
 
   es: {
     lang: "Español",
     dir: "ltr",
-    tagline: "Un prompt gratuito, sin registro, que convierte ChatGPT, Claude, Gemini y otros chats de IA en un asesor profesional atento.",
+    heroHook: ["¿Te sientes atascado? Probablemente ", { h: "no es culpa tuya" }, "."],
+    heroSub: "Career Compass es un asesor de carrera gratuito, sin registro, que abres dentro de ChatGPT, Claude o cualquier chat de IA. Primero entiende dónde estás realmente, luego te da una o dos cosas concretas para esta semana. Sin relleno. Tu idioma. Tu ritmo.",
+    mockLabel: "Cómo se siente el primer intercambio",
+    bubbleRoleYou: "Tú",
+    bubbleRoleAdvisor: "Asesor",
+    bubbleUser: "Me despidieron hace tres meses. Todos me dicen que postule más. Estoy agotado y nada funciona.",
+    bubbleAdvisor: "Tiene sentido. Antes de decir nada — dime dónde estás esta semana. ¿Abres portales de empleo y no haces clic, haces clic y no postulas, o postulas y nadie responde?",
     howto: "Cómo usarlo",
     steps: [
       "Elige tu IA abajo.",
@@ -328,16 +575,19 @@ const STRINGS = {
     copyFailed: "No se pudo cargar el prompt. Abre prompt.md en GitHub.",
     copyPressToCopy: "Pulsa Ctrl/Cmd+C para copiar",
     who: "Para quién es",
-    whoBody: "Personas que vuelven al trabajo tras una pausa, recién despedidas, cambiando de rumbo o sin saber qué sigue. No es solo para tecnología. Funciona en cualquier idioma que escribas. Para adultos (18+).",
+    whoBody: "Para ti, si vuelves al trabajo tras una pausa, acabas de perder el empleo, estás tratando de entender qué sigue, o buscas por primera vez. No es solo para tech. Funciona en cualquier idioma que escribas. Para adultos (18+).",
     what: "Qué obtienes",
-    whatBody: "Una conversación estructurada que empieza por entender dónde estás realmente, y luego te ayuda a producir una o dos cosas concretas que puedas hacer esta semana. Al final, un Resumen de Sesión que guardas y pegas al inicio de la siguiente conversación — para continuar donde lo dejaste.",
+    whatBody: "Una conversación estructurada que realmente escucha — empieza por entender dónde estás, y te ayuda a producir una o dos cosas específicas para esta semana. Al final, un Resumen de Sesión que guardas y pegas en la siguiente conversación — para continuar donde lo dejaste.",
     privacy: "Privacidad: tu conversación se queda dentro de tu cuenta de IA. Nada llega a mí, no hay ningún backend. El asesor adapta su estilo a cómo hablas — si le preguntas, te dice qué está notando.",
     tips: "Consejos",
     tipsList: [
       "Funciona mejor con el acceso web activado en tu herramienta de IA (normalmente está activo por defecto).",
-      "No reescribirá tu CV por ti. Te dirá qué cambiar tú mismo — los CV escritos por IA fallan en las entrevistas.",
+      "No reescribirá tu CV por ti. Te dirá qué cambiar tú mismo — los CV escritos por IA se caen en las entrevistas.",
       "No enviará candidaturas masivas. Te ayudará a postularte bien a pocos puestos elegidos con cuidado."
     ],
+    feedbackHeading: "Ayúdame a mejorarlo",
+    feedbackBody: "Lo estoy construyendo abiertamente. Si algo funcionó, se rompió, te confundió, o ayudaría a alguien que conoces — cuéntamelo. Tarda 30 segundos.",
+    feedbackBtn: "Comparte feedback en GitHub",
     more: "Más información",
     links: [
       { label: "Repositorio en GitHub", href: "https://github.com/giannimassi/career-compass" },
@@ -345,13 +595,19 @@ const STRINGS = {
       { label: "Privacidad",            href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "Sesión de ejemplo",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Licencia MIT · Hecho con cuidado"
+    footer: "Licencia MIT · Hecho con cuidado · No sustituye asesoría médica ni legal"
   },
 
   fr: {
     lang: "Français",
     dir: "ltr",
-    tagline: "Un prompt gratuit, sans inscription, qui transforme ChatGPT, Claude, Gemini et d'autres chats d'IA en conseiller de carrière attentif.",
+    heroHook: ["Bloqué·e ? Ce n'est ", { h: "probablement pas toi" }, "."],
+    heroSub: "Career Compass est un conseiller de carrière gratuit, sans inscription, que tu ouvres dans ChatGPT, Claude ou n'importe quel chat d'IA. Il comprend d'abord où tu en es vraiment, puis te donne une ou deux choses concrètes à faire cette semaine. Pas de blabla. Ta langue. Ton rythme.",
+    mockLabel: "À quoi ressemble un premier échange",
+    bubbleRoleYou: "Toi",
+    bubbleRoleAdvisor: "Conseiller",
+    bubbleUser: "J'ai été licencié·e il y a trois mois. Tout le monde me dit de postuler plus. Je suis épuisé·e et rien ne marche.",
+    bubbleAdvisor: "Ça se comprend. Avant que je dise quoi que ce soit — dis-moi où tu en es cette semaine. Tu ouvres des sites d'emploi sans cliquer, tu cliques sans postuler, ou tu postules et personne ne répond ?",
     howto: "Comment l'utiliser",
     steps: [
       "Choisissez votre IA ci-dessous.",
@@ -367,16 +623,19 @@ const STRINGS = {
     copyFailed: "Impossible de charger le prompt. Ouvrez prompt.md sur GitHub.",
     copyPressToCopy: "Appuyez sur Ctrl/Cmd+C pour copier",
     who: "Pour qui",
-    whoBody: "Personnes qui retournent au travail après une pause, récemment licenciées, en changement de direction, ou incertaines de la suite. Pas seulement la tech. Fonctionne dans n'importe quelle langue que vous écrivez. Pour adultes (18+).",
-    what: "Ce que vous obtenez",
-    whatBody: "Une conversation structurée qui commence par comprendre où vous en êtes vraiment, puis vous aide à produire une ou deux choses concrètes à faire cette semaine. À la fin, un Résumé de Session que vous enregistrez et recollez au début de la prochaine conversation — pour continuer où vous en étiez.",
+    whoBody: "Pour toi, si tu reprends le travail après une pause, si tu viens de perdre ton emploi, si tu cherches à savoir quoi faire ensuite, ou si tu postules pour la première fois. Pas seulement la tech. Fonctionne dans n'importe quelle langue que tu écris. Pour adultes (18+).",
+    what: "Ce que tu obtiens",
+    whatBody: "Une conversation structurée qui écoute vraiment — qui commence par comprendre où tu en es, puis t'aide à produire une ou deux choses précises à faire cette semaine. À la fin, un Résumé de Session que tu enregistres et recolles au début de la prochaine conversation — pour continuer où tu en étais.",
     privacy: "Confidentialité : votre conversation reste dans votre compte IA. Rien ne m'arrive, il n'y a aucun backend. Le conseiller adapte son style à votre manière de parler — si vous lui demandez, il vous dit ce qu'il remarque.",
     tips: "Conseils",
     tipsList: [
       "Fonctionne mieux quand l'accès web est activé dans votre outil IA (souvent activé par défaut).",
-      "Il ne réécrira pas votre CV. Il vous dira quoi changer vous-même — les CV écrits par l'IA ne tiennent pas en entretien.",
+      "Il ne réécrira pas votre CV. Il vous dira quoi changer vous-même — les CV écrits par l'IA s'effondrent en entretien.",
       "Il ne fera pas de candidatures en masse. Il vous aidera à postuler à quelques postes bien choisis."
     ],
+    feedbackHeading: "Aide-moi à l'améliorer",
+    feedbackBody: "Je le construis à découvert. Si quelque chose a marché, s'est cassé, t'a perdu·e, ou pourrait aider quelqu'un que tu connais — dis-le-moi. Trente secondes, pas plus.",
+    feedbackBtn: "Donner un retour sur GitHub",
     more: "Pour aller plus loin",
     links: [
       { label: "Dépôt GitHub",        href: "https://github.com/giannimassi/career-compass" },
@@ -384,13 +643,19 @@ const STRINGS = {
       { label: "Confidentialité",     href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "Exemple de session",  href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Licence MIT · Fait avec soin"
+    footer: "Licence MIT · Fait avec soin · Ne remplace pas un avis médical ou juridique"
   },
 
   de: {
     lang: "Deutsch",
     dir: "ltr",
-    tagline: "Ein kostenloser Prompt ohne Anmeldung, der ChatGPT, Claude, Gemini und andere KI-Chats in einen aufmerksamen Karriere-Berater verwandelt.",
+    heroHook: ["Festgefahren? Liegt wahrscheinlich ", { h: "nicht an dir" }, "."],
+    heroSub: "Career Compass ist ein kostenloser Karriere-Berater ohne Anmeldung, den du in ChatGPT, Claude oder einem beliebigen KI-Chat öffnest. Er versteht zuerst, wo du wirklich stehst, und gibt dir dann ein oder zwei konkrete Schritte für diese Woche. Kein Blabla. Deine Sprache. Dein Tempo.",
+    mockLabel: "So fühlt sich ein erster Austausch an",
+    bubbleRoleYou: "Du",
+    bubbleRoleAdvisor: "Berater",
+    bubbleUser: "Ich wurde vor drei Monaten entlassen. Alle sagen mir, ich soll mich mehr bewerben. Ich bin erschöpft und nichts klappt.",
+    bubbleAdvisor: "Das ergibt Sinn. Bevor ich irgendwas sage — erzähl mir, wo du diese Woche stehst. Öffnest du Job-Seiten und klickst nicht? Klickst und bewirbst dich nicht? Bewirbst dich und hörst nichts zurück?",
     howto: "So geht's",
     steps: [
       "Wähle unten deine KI.",
@@ -406,9 +671,9 @@ const STRINGS = {
     copyFailed: "Prompt konnte nicht geladen werden. Öffne prompt.md auf GitHub.",
     copyPressToCopy: "Drücke Strg/Cmd+C zum Kopieren",
     who: "Für wen",
-    whoBody: "Menschen, die nach einer Pause wieder einsteigen, gerade den Job verloren haben, die Richtung ändern oder nicht wissen, wie es weitergeht. Nicht nur für Tech. Funktioniert in jeder Sprache, die du schreibst. Für Erwachsene (18+).",
+    whoBody: "Für dich, wenn du nach einer Pause zurückkehrst, gerade den Job verloren hast, herausfinden willst, wie es weitergeht, oder zum ersten Mal suchst. Nicht nur für Tech. Funktioniert in jeder Sprache, die du schreibst. Für Erwachsene (18+).",
     what: "Was du bekommst",
-    whatBody: "Ein strukturiertes Gespräch, das zuerst versteht, wo du wirklich stehst, und dir dann hilft, ein oder zwei konkrete Schritte für diese Woche zu finden. Am Ende eine Session-Zusammenfassung, die du speicherst und beim nächsten Mal wieder einfügst — so kannst du dort weitermachen, wo du aufgehört hast.",
+    whatBody: "Ein strukturiertes Gespräch, das wirklich zuhört — es beginnt damit, zu verstehen, wo du stehst, und hilft dir dann, ein oder zwei konkrete Dinge für diese Woche zu finden. Am Ende eine Session-Zusammenfassung, die du speicherst und beim nächsten Mal einfügst — um dort weiterzumachen, wo du aufgehört hast.",
     privacy: "Datenschutz: dein Gespräch bleibt in deinem KI-Konto. Nichts kommt zu mir, es gibt kein Backend. Der Berater passt seinen Ton an deine Art zu reden an — wenn du fragst, sagt er dir, was er bemerkt.",
     tips: "Tipps",
     tipsList: [
@@ -416,20 +681,29 @@ const STRINGS = {
       "Er schreibt deinen Lebenslauf nicht um. Er sagt dir, was du selbst ändern sollst — KI-geschriebene Lebensläufe fallen im Gespräch auf.",
       "Er bewirbt dich nicht automatisch auf 50 Stellen. Er hilft dir, dich bei wenigen, gut gewählten Stellen richtig zu bewerben."
     ],
+    feedbackHeading: "Hilf mir, es besser zu machen",
+    feedbackBody: "Ich baue das offen. Wenn etwas funktioniert hat, kaputt ging, dich verwirrt hat, oder jemandem helfen würde, den du kennst — sag mir Bescheid. Dauert 30 Sekunden.",
+    feedbackBtn: "Feedback auf GitHub geben",
     more: "Mehr erfahren",
     links: [
-      { label: "GitHub-Repository", href: "https://github.com/giannimassi/career-compass" },
-      { label: "So funktioniert es", href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
-      { label: "Datenschutz",        href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
-      { label: "Beispiel-Session",   href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
+      { label: "GitHub-Repository",   href: "https://github.com/giannimassi/career-compass" },
+      { label: "So funktioniert es",  href: "https://github.com/giannimassi/career-compass/blob/main/docs/how-it-works.md" },
+      { label: "Datenschutz",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
+      { label: "Beispiel-Session",    href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · MIT-Lizenz · Mit Sorgfalt gemacht"
+    footer: "MIT-Lizenz · Mit Sorgfalt gemacht · Ersetzt keine medizinische oder rechtliche Beratung"
   },
 
   ro: {
     lang: "Română",
     dir: "ltr",
-    tagline: "Un prompt gratuit, fără înregistrare, care transformă ChatGPT, Claude, Gemini și alte chat-uri AI într-un consilier de carieră atent.",
+    heroHook: ["Blocat? Probabil ", { h: "nu e vina ta" }, "."],
+    heroSub: "Career Compass e un consilier de carieră gratuit, fără înregistrare, pe care îl deschizi în ChatGPT, Claude sau orice chat AI. Înțelege întâi unde ești cu adevărat, apoi îți dă unul-două lucruri concrete pentru săptămâna asta. Fără umplutură. Limba ta. Ritmul tău.",
+    mockLabel: "Cum se simte un prim schimb",
+    bubbleRoleYou: "Tu",
+    bubbleRoleAdvisor: "Consilier",
+    bubbleUser: "Am fost concediat acum trei luni. Toți îmi spun să aplic mai mult. Sunt epuizat și nu funcționează nimic.",
+    bubbleAdvisor: "Are sens. Înainte să spun ceva — spune-mi unde ești săptămâna asta. Deschizi site-uri de joburi și nu dai click, dai click și nu aplici, sau aplici și nu răspunde nimeni?",
     howto: "Cum se folosește",
     steps: [
       "Alege AI-ul tău mai jos.",
@@ -445,9 +719,9 @@ const STRINGS = {
     copyFailed: "Nu s-a putut încărca promptul. Deschide prompt.md pe GitHub.",
     copyPressToCopy: "Apasă Ctrl/Cmd+C pentru a copia",
     who: "Pentru cine este",
-    whoBody: "Oameni care se întorc la muncă după o pauză, recent concediați, care își schimbă direcția sau nu știu ce urmează. Nu doar pentru tech. Funcționează în orice limbă scrii. Pentru adulți (18+).",
+    whoBody: "Pentru tine, dacă te întorci la muncă după o pauză, ai pierdut recent jobul, încerci să înțelegi ce urmează, sau aplici prima dată. Nu doar pentru tech. Funcționează în orice limbă scrii. Pentru adulți (18+).",
     what: "Ce primești",
-    whatBody: "O conversație structurată care începe prin a înțelege unde ești cu adevărat, apoi te ajută să ajungi la unul-două pași concreți pentru săptămâna asta. La final, un Rezumat al Sesiunii pe care îl salvezi și îl lipești la începutul următoarei conversații — ca să continui de unde ai rămas.",
+    whatBody: "O conversație structurată care chiar ascultă — începe prin a înțelege unde ești, apoi te ajută să ajungi la unul-două pași concreți pentru săptămâna asta. La final, un Rezumat al Sesiunii pe care îl salvezi și îl lipești la începutul următoarei conversații — ca să continui de unde ai rămas.",
     privacy: "Confidențialitate: conversația rămâne în contul tău AI. Nimic nu ajunge la mine, nu există niciun server. Consilierul își adaptează stilul la felul tău de a vorbi — dacă îl întrebi, îți spune ce observă.",
     tips: "Sfaturi",
     tipsList: [
@@ -455,6 +729,9 @@ const STRINGS = {
       "Nu-ți va rescrie CV-ul. Îți spune ce să schimbi singur — CV-urile scrise de AI se prăbușesc la interviu.",
       "Nu va aplica în masă pentru tine. Te ajută să aplici bine la câteva roluri alese cu grijă."
     ],
+    feedbackHeading: "Ajută-mă să-l fac mai bun",
+    feedbackBody: "Îl construiesc deschis. Dacă ceva a mers, s-a stricat, te-a derutat, sau ar ajuta pe cineva pe care îl știi — spune-mi. Durează 30 de secunde.",
+    feedbackBtn: "Trimite feedback pe GitHub",
     more: "Mai multe",
     links: [
       { label: "Depozit GitHub",     href: "https://github.com/giannimassi/career-compass" },
@@ -462,13 +739,19 @@ const STRINGS = {
       { label: "Confidențialitate",  href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "Exemplu de sesiune", href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Licență MIT · Făcut cu grijă"
+    footer: "Licență MIT · Făcut cu grijă · Nu înlocuiește sfatul medical sau juridic"
   },
 
   uk: {
     lang: "Українська",
     dir: "ltr",
-    tagline: "Безкоштовний промпт без реєстрації, який перетворює ChatGPT, Claude, Gemini та інші AI-чати на уважного кар'єрного радника.",
+    heroHook: ["Застряг? Скоріш за все ", { h: "це не через тебе" }, "."],
+    heroSub: "Career Compass — безкоштовний кар'єрний радник без реєстрації, якого ти відкриваєш у ChatGPT, Claude чи будь-якому AI-чаті. Спершу він розбирається, де ти реально знаходишся, а потім дає одну-дві конкретні речі, які можна зробити цього тижня. Без води. Твоя мова. Твій темп.",
+    mockLabel: "Як виглядає перший обмін",
+    bubbleRoleYou: "Ти",
+    bubbleRoleAdvisor: "Радник",
+    bubbleUser: "Мене звільнили три місяці тому. Усі кажуть подавати більше. Я виснажений і нічого не спрацьовує.",
+    bubbleAdvisor: "Це зрозуміло. Перш ніж я щось скажу — розкажи, де ти цього тижня. Ти відкриваєш сайти вакансій і не клікаєш? Клікаєш і не подаєш? Подаєш і ніхто не відповідає?",
     howto: "Як користуватися",
     steps: [
       "Обери AI нижче.",
@@ -484,9 +767,9 @@ const STRINGS = {
     copyFailed: "Не вдалося завантажити промпт. Відкрий prompt.md на GitHub.",
     copyPressToCopy: "Натисни Ctrl/Cmd+C щоб скопіювати",
     who: "Для кого",
-    whoBody: "Люди, які повертаються до роботи після перерви, нещодавно втратили роботу, змінюють напрямок або не знають, що далі. Не лише для IT. Працює будь-якою мовою, якою ти пишеш. Для дорослих (18+).",
+    whoBody: "Для тебе, якщо повертаєшся до роботи після перерви, щойно втратив роботу, намагаєшся зрозуміти, що далі, або шукаєш уперше. Не лише для IT. Працює будь-якою мовою, якою ти пишеш. Для дорослих (18+).",
     what: "Що ти отримаєш",
-    whatBody: "Структуровану розмову, яка спочатку розбирається, де ти насправді перебуваєш, а потім допомагає визначити одну-дві конкретні речі, які можна зробити цього тижня. У кінці — Підсумок Сесії, який ти зберігаєш і вставляєш на початку наступної розмови, щоб продовжити звідти, де зупинився.",
+    whatBody: "Структуровану розмову, яка справді слухає — спершу з'ясовує, де ти насправді, а потім допомагає визначити одну-дві конкретні речі, які можна зробити цього тижня. У кінці — Підсумок Сесії, який ти зберігаєш і вставляєш на початку наступної розмови, щоб продовжити звідти, де зупинився.",
     privacy: "Приватність: розмова залишається у твоєму AI-акаунті. Нічого не потрапляє до мене, немає ніякого сервера. Радник підлаштовує свій стиль під те, як ти говориш — якщо запитаєш, він скаже, що помічає.",
     tips: "Поради",
     tipsList: [
@@ -494,6 +777,9 @@ const STRINGS = {
       "Не перепише тобі резюме. Скаже, що змінити самому — резюме, написані AI, провалюються на співбесіді.",
       "Не подаватиме заявки масово. Допоможе подати заявки добре на кілька ретельно вибраних вакансій."
     ],
+    feedbackHeading: "Допоможи мені зробити це краще",
+    feedbackBody: "Я роблю це відкрито. Якщо щось спрацювало, зламалося, збило з пантелику, або допомогло б комусь, кого ти знаєш — скажи мені. 30 секунд.",
+    feedbackBtn: "Залиш фідбек на GitHub",
     more: "Більше",
     links: [
       { label: "Репозиторій GitHub",  href: "https://github.com/giannimassi/career-compass" },
@@ -501,13 +787,19 @@ const STRINGS = {
       { label: "Приватність",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "Приклад сесії",       href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Ліцензія MIT · Зроблено з турботою"
+    footer: "Ліцензія MIT · Зроблено з турботою · Не замінює медичну або юридичну консультацію"
   },
 
   sq: {
     lang: "Shqip",
     dir: "ltr",
-    tagline: "Një prompt falas, pa regjistrim, që e kthen ChatGPT, Claude, Gemini dhe biseda të tjera AI në një këshilltar karriere të vëmendshëm.",
+    heroHook: ["I bllokuar? Ka shumë mundësi që ", { h: "nuk është faji yt" }, "."],
+    heroSub: "Career Compass është një këshilltar karriere falas, pa regjistrim, që e hapni brenda ChatGPT, Claude ose çdo bisede AI. Fillimisht kupton se ku jeni vërtet, pastaj ju jep një ose dy gjëra konkrete për këtë javë. Pa mbushje. Gjuha juaj. Ritmi juaj.",
+    mockLabel: "Si duket një shkëmbim i parë",
+    bubbleRoleYou: "Ti",
+    bubbleRoleAdvisor: "Këshilltari",
+    bubbleUser: "Më pushuan nga puna para tre muajsh. Të gjithë më thonë të aplikoj më shumë. Jam i rraskapitur dhe asgjë nuk funksionon.",
+    bubbleAdvisor: "Ka kuptim. Para se të them ndonjë gjë — më thuaj ku je këtë javë. Hap faqe pune dhe nuk kliko, kliko dhe nuk aplikon, apo aplikon dhe askush nuk përgjigjet?",
     howto: "Si përdoret",
     steps: [
       "Zgjidh AI-në tënde më poshtë.",
@@ -523,9 +815,9 @@ const STRINGS = {
     copyFailed: "Nuk u ngarkua promptin. Hapni prompt.md në GitHub.",
     copyPressToCopy: "Shtypni Ctrl/Cmd+C për ta kopjuar",
     who: "Për kë është",
-    whoBody: "Njerëz që rikthehen në punë pas një pauze, që sapo kanë humbur punën, që po ndryshojnë drejtimin, ose që nuk dinë çfarë vijon. Jo vetëm për teknologjinë. Funksionon në çdo gjuhë që shkruani. Për të rritur (18+).",
+    whoBody: "Për ty, nëse po rikthehesh në punë pas një pauze, sapo humbe punën, po mundohesh të kuptosh çfarë vjen më pas, ose po aplikon për herë të parë. Jo vetëm për teknologjinë. Funksionon në çdo gjuhë që shkruani. Për të rritur (18+).",
     what: "Çfarë merr",
-    whatBody: "Një bisedë e strukturuar që nis duke kuptuar se ku jeni vërtet, pastaj ju ndihmon të prodhoni një ose dy gjëra konkrete për këtë javë. Në fund, një Përmbledhje Seance që e ruani dhe e ngjitni në fillim të bisedës së ardhshme — që të vazhdoni nga aty ku lini.",
+    whatBody: "Një bisedë e strukturuar që dëgjon vërtet — nis duke kuptuar ku je, pastaj të ndihmon të nxjerrësh një ose dy gjëra konkrete për këtë javë. Në fund, një Përmbledhje Seance që e ruan dhe e ngjit në fillim të bisedës së ardhshme — që të vazhdosh nga aty ku le.",
     privacy: "Privatësia: biseda juaj mbetet brenda llogarisë tuaj AI. Asgjë nuk më vjen mua, nuk ka backend. Këshilltari përshtatet me mënyrën si flisni — nëse e pyesni, ju thotë çfarë po vëren.",
     tips: "Këshilla",
     tipsList: [
@@ -533,6 +825,9 @@ const STRINGS = {
       "Nuk do t'ju rishkruajë CV-në. Ju thotë çfarë të ndryshoni ju vetë — CV-të e shkruara nga AI dështojnë në intervista.",
       "Nuk do të aplikojë masivisht. Ju ndihmon të aplikoni mirë në pak role të zgjedhura me kujdes."
     ],
+    feedbackHeading: "Më ndihmo ta bëj më të mirë",
+    feedbackBody: "Po e ndërtoj hapur. Nëse diçka funksionoi, u thye, ju ngatërroi, ose do t'i ndihmonte dikujt që njihni — më thuaj. 30 sekonda.",
+    feedbackBtn: "Dërgo feedback në GitHub",
     more: "Më shumë",
     links: [
       { label: "Depoja GitHub",      href: "https://github.com/giannimassi/career-compass" },
@@ -540,13 +835,19 @@ const STRINGS = {
       { label: "Privatësia",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "Shembull seance",    href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · Licenca MIT · E bërë me kujdes"
+    footer: "Licenca MIT · E bërë me kujdes · Nuk zëvendëson këshillimin mjekësor ose ligjor"
   },
 
   ar: {
     lang: "العربية",
     dir: "rtl",
-    tagline: "موجِّه مجاني وبدون تسجيل، يحوِّل ChatGPT و Claude و Gemini ومحادثات الذكاء الاصطناعي الأخرى إلى مستشار مهني مدروس.",
+    heroHook: ["عالق؟ على الأرجح ", { h: "المشكلة ليست فيك" }, "."],
+    heroSub: "Career Compass مستشار مهني مجاني، بدون تسجيل، تفتحه داخل ChatGPT أو Claude أو أي محادثة ذكاء اصطناعي. يفهم أولاً أين أنت فعلاً، ثم يعطيك شيئاً أو شيئين ملموسَين لهذا الأسبوع. بلا حشو. بلغتك. بإيقاعك.",
+    mockLabel: "كيف يبدو أول تبادل",
+    bubbleRoleYou: "أنت",
+    bubbleRoleAdvisor: "المستشار",
+    bubbleUser: "فُصلت من عملي قبل ثلاثة أشهر. الجميع يقول لي قدِّم أكثر. أنا منهك ولا شيء يعمل.",
+    bubbleAdvisor: "هذا مفهوم. قبل أن أقول أي شيء — أخبرني أين أنت هذا الأسبوع. هل تفتح مواقع الوظائف ولا تضغط؟ تضغط ولا تقدِّم؟ تقدِّم ولا يرد عليك أحد؟",
     howto: "كيف تستخدمه",
     steps: [
       "اختر الذكاء الاصطناعي أدناه.",
@@ -562,9 +863,9 @@ const STRINGS = {
     copyFailed: "تعذَّر تحميل الموجِّه. افتح prompt.md على GitHub.",
     copyPressToCopy: "اضغط Ctrl/Cmd+C للنسخ",
     who: "لمن هذا",
-    whoBody: "للأشخاص العائدين إلى العمل بعد انقطاع، أو الذين فقدوا وظائفهم مؤخراً، أو الذين يغيِّرون مسارهم، أو غير المتأكدين ممَّا سيأتي. ليس مخصَّصاً للتقنية فقط. يعمل بأي لغة تكتب بها. للبالغين (18+).",
+    whoBody: "لك، إن كنت تعود إلى العمل بعد انقطاع، فقدت وظيفتك مؤخراً، تحاول أن تفهم ما التالي، أو تتقدَّم للعمل لأول مرة. ليس مخصَّصاً للتقنية فقط. يعمل بأي لغة تكتب بها. للبالغين (18+).",
     what: "ماذا تحصل",
-    whatBody: "محادثة منظَّمة تبدأ بفهم موقعك الحقيقي، ثم تساعدك على إنتاج شيء أو شيئين ملموسَين يمكنك تنفيذهما هذا الأسبوع. في النهاية، ملخَّص جلسة تحفظه وتلصقه في بداية المحادثة التالية — لتتمكَّن من المتابعة من حيث توقَّفت.",
+    whatBody: "محادثة منظَّمة تصغي حقاً — تبدأ بفهم أين أنت، ثم تساعدك على إنتاج شيء أو شيئين ملموسَين لهذا الأسبوع. في النهاية، ملخَّص جلسة تحفظه وتلصقه في بداية المحادثة التالية — لتتمكَّن من المتابعة من حيث توقَّفت.",
     privacy: "الخصوصية: محادثتك تبقى داخل حسابك على أداة الذكاء الاصطناعي. لا شيء يصلني، ولا يوجد خادم. يكيِّف المستشار أسلوبه مع طريقة حديثك — وإن سألته، أخبرك بما يلاحظه.",
     tips: "نصائح",
     tipsList: [
@@ -572,6 +873,9 @@ const STRINGS = {
       "لن يعيد كتابة سيرتك الذاتية. سيخبرك بما يجب تغييره بنفسك — السِّيَر التي يكتبها الذكاء الاصطناعي تفشل في المقابلات.",
       "لن يقدِّم طلبات توظيف بالجملة. سيساعدك على التقديم جيداً لعدد قليل من الوظائف المختارة بعناية."
     ],
+    feedbackHeading: "ساعدني لأجعله أفضل",
+    feedbackBody: "أبنيه بشفافية. إذا شيء نجح، أو تعطَّل، أو أربكك، أو قد يساعد أحداً تعرفه — أخبرني. 30 ثانية.",
+    feedbackBtn: "شارك ملاحظاتك على GitHub",
     more: "المزيد",
     links: [
       { label: "مستودع GitHub",    href: "https://github.com/giannimassi/career-compass" },
@@ -579,13 +883,19 @@ const STRINGS = {
       { label: "الخصوصية",          href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "مثال جلسة",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · رخصة MIT · صُنع باهتمام"
+    footer: "رخصة MIT · صُنع باهتمام · لا يُغني عن استشارة طبية أو قانونية"
   },
 
   zh: {
     lang: "中文",
     dir: "ltr",
-    tagline: "一个免费、免注册的提示词，让 ChatGPT、Claude、Gemini 和其他 AI 聊天工具变成一位贴心的职业顾问。",
+    heroHook: ["感觉卡住了？其实 ", { h: "大概率不是你的问题" }, "。"],
+    heroSub: "Career Compass 是一个免费、免注册的职业顾问，你在 ChatGPT、Claude 或任何 AI 聊天里打开它。它先搞清楚你现在真正在哪里，再给你一两件本周就能动手做的具体事。没有废话。用你的语言，按你的节奏。",
+    mockLabel: "第一次对话的感觉",
+    bubbleRoleYou: "你",
+    bubbleRoleAdvisor: "顾问",
+    bubbleUser: "三个月前被裁了。大家都叫我多投简历。我已经精疲力尽了，什么也不管用。",
+    bubbleAdvisor: "这完全说得通。在我说任何话之前 —— 告诉我你这周在哪个状态。你是打开招聘网站但不点？点了但不投？投了但没有人回？",
     howto: "使用方法",
     steps: [
       "在下方选择你的 AI。",
@@ -601,9 +911,9 @@ const STRINGS = {
     copyFailed: "无法加载提示词。请在 GitHub 上打开 prompt.md。",
     copyPressToCopy: "按 Ctrl/Cmd+C 复制",
     who: "适合谁",
-    whoBody: "适合休息一段时间后重新回到工作、最近失业、正在转换方向、或者不确定下一步的人。不限于技术行业。你用什么语言写,它就用什么语言回应。面向成年人(18+)。",
+    whoBody: "适合你 —— 无论你是休息一段时间后重新回到工作、最近失业、正在搞清楚下一步，还是第一次找工作。不限于技术行业。你用什么语言写,它就用什么语言回应。面向成年人(18+)。",
     what: "你会得到什么",
-    whatBody: "一场有结构的对话,先弄清楚你现在到底处在什么位置,然后帮你定下一两件本周就能动手做的具体事情。最后会生成一份「会话摘要」,你保存起来,下次对话开始时粘贴进去 —— 这样就能从上次的地方接着聊。",
+    whatBody: "一场真正会倾听的、有结构的对话 —— 先弄清楚你现在到底在什么位置,然后帮你定下一两件本周就能动手做的具体事情。最后会生成一份「会话摘要」,你保存起来,下次对话开始时粘贴进去 —— 这样就能从上次的地方接着聊。",
     privacy: "隐私:你的对话留在你自己的 AI 账户里。没有任何内容发给我,也没有后端服务器。顾问会根据你说话的方式调整自己的语气 —— 你问它在注意什么,它会直接告诉你。",
     tips: "小贴士",
     tipsList: [
@@ -611,6 +921,9 @@ const STRINGS = {
       "它不会帮你重写简历。它告诉你该自己改哪里 —— AI 写的简历在面试时撑不住。",
       "它不会帮你批量投简历。它会帮你把少数几个精挑的岗位投得很好。"
     ],
+    feedbackHeading: "帮我把它做得更好",
+    feedbackBody: "我在公开地做这个。如果有什么管用了、坏了、让你困惑了、或者能帮到你认识的人 —— 告诉我。30 秒就够。",
+    feedbackBtn: "在 GitHub 上反馈",
     more: "更多",
     links: [
       { label: "GitHub 仓库",     href: "https://github.com/giannimassi/career-compass" },
@@ -618,7 +931,7 @@ const STRINGS = {
       { label: "隐私说明",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/privacy.md" },
       { label: "会话示例",         href: "https://github.com/giannimassi/career-compass/blob/main/docs/example-session.md" }
     ],
-    footer: "GitHub · MIT 许可证 · 用心制作"
+    footer: "MIT 许可证 · 用心制作 · 不替代医疗或法律建议"
   }
 };
 
@@ -626,7 +939,7 @@ const STRINGS = {
 let CURRENT_LANG = "en";
 let PROMPT_TEXT = null;
 
-// --- Prompt loading (for manual copy fallback) ---
+// --- Prompt loading (for manual copy fallback + LLM button click) ---
 async function loadPrompt() {
   if (PROMPT_TEXT) return PROMPT_TEXT;
   try {
@@ -644,6 +957,54 @@ async function loadPrompt() {
   return PROMPT_TEXT;
 }
 
+// --- Render helpers ---
+function renderHook(target, tokens) {
+  target.innerHTML = "";
+  tokens.forEach(tok => {
+    if (typeof tok === "string") {
+      target.appendChild(document.createTextNode(tok));
+    } else if (tok && tok.h) {
+      const span = document.createElement("span");
+      span.className = "highlight";
+      span.textContent = tok.h;
+      target.appendChild(span);
+    }
+  });
+}
+
+// --- Toast after LLM button click ---
+let TOAST_TIMEOUT = null;
+function showCopied(providerName) {
+  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
+  const toast = document.getElementById("toast");
+  toast.textContent = t.llmCopied.replace("{provider}", providerName);
+  toast.classList.add("show");
+  if (TOAST_TIMEOUT) clearTimeout(TOAST_TIMEOUT);
+  TOAST_TIMEOUT = setTimeout(() => toast.classList.remove("show"), 5000);
+}
+
+// --- Copy full prompt (manual fallback button) ---
+async function copyPrompt() {
+  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
+  const btn = document.getElementById("copy-btn");
+  const text = await loadPrompt();
+  if (!text) {
+    btn.textContent = t.copyFailed;
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = t.copied;
+    btn.classList.add("ok");
+    setTimeout(() => {
+      btn.textContent = t.copyBtn;
+      btn.classList.remove("ok");
+    }, 3500);
+  } catch (e) {
+    btn.textContent = t.copyPressToCopy;
+  }
+}
+
 // --- Render ---
 function render(lang) {
   const t = STRINGS[lang] || STRINGS.en;
@@ -652,18 +1013,31 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.body.dir = t.dir;
 
-  document.getElementById("tagline").textContent = t.tagline;
+  renderHook(document.getElementById("hero-hook"), t.heroHook);
+  document.getElementById("hero-sub").textContent = t.heroSub;
+  document.getElementById("mock-label").textContent = t.mockLabel;
+  document.getElementById("bubble-role-you").textContent = t.bubbleRoleYou;
+  document.getElementById("bubble-role-advisor").textContent = t.bubbleRoleAdvisor;
+  document.getElementById("bubble-user").textContent = t.bubbleUser;
+  document.getElementById("bubble-advisor").textContent = t.bubbleAdvisor;
+
   document.getElementById("howto-heading").textContent = t.howto;
   document.getElementById("llm-hint").textContent = t.llmHint;
   document.getElementById("or-label").textContent = t.or;
   document.getElementById("copy-btn").textContent = t.copyBtn;
   document.getElementById("copy-hint").textContent = t.copyHint;
+
   document.getElementById("who-heading").textContent = t.who;
   document.getElementById("who-body").textContent = t.whoBody;
   document.getElementById("what-heading").textContent = t.what;
   document.getElementById("what-body").textContent = t.whatBody;
   document.getElementById("privacy-note").textContent = t.privacy;
   document.getElementById("tips-heading").textContent = t.tips;
+
+  document.getElementById("feedback-heading").textContent = t.feedbackHeading;
+  document.getElementById("feedback-body").textContent = t.feedbackBody;
+  document.getElementById("feedback-btn-label").textContent = t.feedbackBtn;
+
   document.getElementById("more-heading").textContent = t.more;
   document.getElementById("footer-text").textContent = t.footer;
 
@@ -676,7 +1050,7 @@ function render(lang) {
     ol.appendChild(li);
   });
 
-  // LLM buttons — each copies the prompt and opens the chat
+  // LLM buttons
   const grid = document.getElementById("llm-grid");
   grid.innerHTML = "";
   LLMS.forEach(l => {
@@ -690,7 +1064,6 @@ function render(lang) {
       if (PROMPT_TEXT) {
         navigator.clipboard.writeText(PROMPT_TEXT).catch(() => {});
       } else {
-        // Not loaded yet — kick off load and copy when ready
         loadPrompt().then(text => {
           if (text) navigator.clipboard.writeText(text).catch(() => {});
         });
@@ -722,39 +1095,6 @@ function render(lang) {
     li.appendChild(a);
     moreUl.appendChild(li);
   });
-}
-
-// --- Toast after LLM button click ---
-let TOAST_TIMEOUT = null;
-function showCopied(providerName) {
-  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
-  const toast = document.getElementById("toast");
-  toast.textContent = t.llmCopied.replace("{provider}", providerName);
-  toast.classList.add("show");
-  if (TOAST_TIMEOUT) clearTimeout(TOAST_TIMEOUT);
-  TOAST_TIMEOUT = setTimeout(() => toast.classList.remove("show"), 5000);
-}
-
-// --- Copy full prompt ---
-async function copyPrompt() {
-  const t = STRINGS[CURRENT_LANG] || STRINGS.en;
-  const btn = document.getElementById("copy-btn");
-  const text = await loadPrompt();
-  if (!text) {
-    btn.textContent = t.copyFailed;
-    return;
-  }
-  try {
-    await navigator.clipboard.writeText(text);
-    btn.textContent = t.copied;
-    btn.classList.add("ok");
-    setTimeout(() => {
-      btn.textContent = t.copyBtn;
-      btn.classList.remove("ok");
-    }, 3500);
-  } catch (e) {
-    btn.textContent = t.copyPressToCopy;
-  }
 }
 
 // --- Language selection ---
@@ -793,7 +1133,7 @@ function populateSelector() {
   CURRENT_LANG = detectInitialLang();
   render(CURRENT_LANG);
   populateSelector();
-  loadPrompt(); // warm cache for copy-prompt button
+  loadPrompt(); // warm cache
 })();
 </script>
 </body>

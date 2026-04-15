@@ -7,7 +7,7 @@ Designed for people who are:
 - recently out of a job and unsure what's next
 - changing direction and not sure where to point
 
-Works in English or Italian (or whatever language you write in).
+Works in English or Italian (or whatever language you write in). Intended for adults (18+).
 
 ## How to use
 

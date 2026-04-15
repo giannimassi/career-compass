@@ -8,7 +8,9 @@ User starts a new ChatGPT conversation, pastes the prompt, then types their open
 
 **User:** I got fired from my marketing job three months ago. I'm 34, I've been looking since, but I feel like I've been applying to a lot of different things without much direction. Nothing's worked.
 
-**Advisor:** Job searching after a sudden exit is genuinely hard, especially when the direction piece gets blurry under the pressure of needing income. This conversation can help you step back and figure out where you actually are versus where you're trying to go, and get you one or two things to do this week that will move you.
+**Advisor:** Quick note before we dig in: no two people search for work the same way, so I'll pay attention to how you talk — your pace, what you care about, what weighs on you — and match my style to yours. It's what a good friend or coach does. Ask me anytime what I'm noticing. Prefer I don't adapt? Say so and I'll give you direct, neutral advice instead.
+
+Job searching after a sudden exit is genuinely hard, especially when the direction piece gets blurry under the pressure of needing income. This conversation can help you step back and figure out where you actually are versus where you're trying to go, and get you one or two things to do this week that will move you.
 
 Before anything else — where are you in your search right now? I'm asking about the emotional read, not just the logistics.
 
@@ -56,6 +58,12 @@ Now, role type. You mentioned marketing, comms, and customer success. Which of t
 
 Here's what you're leaving with: a committed direction (Senior Marketing Manager, vertical-SaaS, remote-first), a pitch that leans on your differentiator (you've scaled B2B marketing during product pivots twice, most peers haven't), and a first-week next step (three warm-intro outreaches before any new cold applications).
 
+One more thing before I write the summary: I can add a few short notes on how we've been talking — your style, what landed — so a future session picks up your register. It's plain-language, not a profile. Want that included, or keep the summary minimal?
+
+**User:** Include it.
+
+**Advisor:**
+
 Save this. Paste it at the start of your next session.
 
 ```
@@ -94,10 +102,9 @@ OPEN THREADS
 RECOMMENDED NEXT SESSION FOCUS [*]
 Start Role sourcing: build search strategy + draft 10-company target list in Series B/C vertical-SaaS. Before then, do the three warm-intro outreaches.
 
-INTERNAL PROFILE [*internal — advisor-facing working read, always in English]
-Communication calibration: medium-direct, medium-analytical, accepts reframes well once the data is named. Wants reasons for recommendations, not just conclusions. Don't over-warm.
-Stress/motivation read: Competence-driven (SDT) — responds best when framed as skill-building not just outcome. Confidence collapse triggered by the mismatch between effort and result, not by external shock.
-Revision log: N/A — initial read.
+COMMUNICATION NOTES [optional — included with your consent, always in English]
+How we've been talking: medium-direct, medium-analytical. Accepts reframes well once the data is named. Wants reasons for recommendations, not just conclusions. Don't over-warm.
+What's worked this session: framing the stall as a pipeline problem, not a character problem — responds best when work is described as skill-building, not just outcomes.
 --- END SUMMARY ---
 ```
 
@@ -110,5 +117,5 @@ Save that and paste it at the start of your next session — we'll pick up from 
 - **Stage-first, not tactics-first**: the advisor didn't launch into "let me help you improve your CV" — it first figured out that the user was Orienting mislabeled as Executing, which changes everything downstream.
 - **Stuck overlay detection**: the pattern of "80 apps → 2 responses → pullback" was recognized and reframed as a confidence loop, not character failure.
 - **Artifacts, not just advice**: the session produced three concrete things (values, north star, pitch) the user can use.
-- **Silent profile inference**: you can see in the INTERNAL PROFILE block that the advisor built a read of the user's style without ever naming it in conversation.
+- **Transparent register adaptation**: the advisor matched the user's pace and analytical framing throughout. At session close, it asked consent before including the `COMMUNICATION NOTES` block in the summary — the user agreed. If they had declined, the block would have been omitted.
 - **Multi-session continuity**: the Session Summary makes the next session resumable without re-explaining context.

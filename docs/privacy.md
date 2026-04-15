@@ -24,9 +24,15 @@ If you have concerns about what a provider does with your conversation, check th
 
 At the end of a conversation, the advisor produces a Session Summary for you to save. That summary lives wherever you put it (a note on your phone, an email to yourself, a Google Doc). **This project has no access to it.**
 
-The INTERNAL PROFILE block inside the summary is a working read the advisor builds to keep its tone consistent with you across sessions. It is advisor-facing, not a judgment. It's always in English (for cross-session stability) and contains short behavioral notes like "prefers short turns, analytical framing" — not diagnostic labels.
+Before adding any `COMMUNICATION NOTES` block to the summary, the advisor will ask for your explicit consent. That block is a plain-language read of how you've been communicating (e.g. "prefers short answers, more energized by autonomy than by team fit") — no diagnostic labels, no personality frameworks. It exists so a future session can match your style without starting from zero. You can skip it, edit it, or ask to see it first. If you skip it, the rest of the summary still works.
 
 If you don't want to keep any state between sessions, just don't save the summary. Each conversation then runs fresh.
+
+## More ways to stay private
+
+- **Temporary / incognito chat** — both ChatGPT and Claude offer chats that aren't saved to your account. Use one if you don't want this session visible later.
+- **Portable summary + delete** — ask the advisor for a Session Summary at any point, save it locally, then delete the conversation. Paste the summary into a fresh chat later to pick up.
+- **Decline adaptation** — tell the advisor "just give me direct, neutral advice" and it won't tailor its register or keep communication notes.
 
 ## Minors
 

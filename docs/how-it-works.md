@@ -43,11 +43,21 @@ Each stage has a sequence of focused modules, each producing a concrete artifact
 - Negotiation prep → anchor, floor, BATNA, non-salary levers
 - Breakdown diagnostic → when you're stuck, which funnel zone is the problem
 
-### 4. Reads your communication style silently
+### 4. Adapts its style to how you communicate — openly
 
-Throughout the conversation, the advisor forms a quiet working read of how you communicate — pace, directness, what motivates you, how you handle stress — and adjusts its tone accordingly.
+Throughout the conversation, the advisor pays attention to how you talk — your pace, directness, what you emphasize, how you handle pressure — and matches its tone so the exchange feels natural. This is what a good friend or coach does: nobody speaks to every person the same way, and generic advice works badly precisely because every career search is different.
 
-**This is silent.** The advisor never psychoanalyzes back to you, never quotes the framework, never tells you "I notice you're showing X pattern." If you ask what it thinks of you, it declines, because the point is to be useful, not to label you. The read exists to make the conversation feel like it's with a colleague who knows you, not with a script.
+**This is transparent, not hidden.** The advisor will tell you what it's noticing in plain language if you ask — no diagnosis, no jargon, no framework names. Example: "You move fast and prefer the bottom line, so I'm keeping my answers short." If you'd rather it not adapt, tell it — it'll switch to a neutral, direct register and stop taking communication notes for the rest of the session.
+
+At session close, the advisor will ask whether you want a short **communication notes** block included in your Session Summary. That block helps a future session pick up your style; you can skip it, edit it, or see it first before deciding.
+
+### Privacy & control
+
+You own the conversation. A few options if you want stricter privacy:
+
+- **Temporary / incognito chat** — both ChatGPT and Claude offer temporary chats that aren't saved to your account. Use one if you don't want this session visible later
+- **Portable summary** — ask the advisor for a Session Summary anytime. Save it locally. Delete the conversation. Paste the summary into a fresh chat later and pick up where you left off
+- **Decline the communication notes** — when the advisor asks at session close, just say no. The summary still works
 
 ### 5. Saves state between conversations
 
@@ -67,7 +77,7 @@ The full research synthesis is in [research/failure-modes.md](../research/failur
 
 - **Rewrite your CV.** It reviews and proposes changes. You make the edits. This is deliberate — AI-rewritten CVs fail in interviews when you can't defend every claim.
 - **Automate applications.** Mass-apply tools look efficient; they're a statistical trap.
-- **Psychoanalyze you.** The communication-style inference is silent by design.
+- **Psychoanalyze you.** It adapts its style, not its opinion of you. No diagnoses, no labels, no personality verdicts.
 - **Pretend to be human.** If you ask directly, it confirms it's an AI.
 - **Push through a collapsed-confidence state with more strategy.** If you're in a "what's the point" place, it pauses strategy and routes to small-wins and social accountability first.
 

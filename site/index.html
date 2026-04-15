@@ -109,16 +109,23 @@
   h1.hero-hook {
     font-family: "Fraunces", ui-serif, Georgia, serif;
     font-weight: 900;
-    font-size: clamp(2.1rem, 6vw, 3.6rem);
-    line-height: 1.05;
+    font-size: clamp(2rem, 5.4vw, 3.4rem);
+    line-height: 1.08;
     letter-spacing: -0.025em;
     margin: 0 0 1rem;
     color: var(--ink);
+    text-wrap: balance;
+    hyphens: auto;
   }
   h1.hero-hook .highlight {
-    background: linear-gradient(120deg, transparent 0%, transparent 10%, var(--warm-soft) 10%, var(--warm-soft) 90%, transparent 90%);
+    background: linear-gradient(120deg, var(--warm-soft) 0%, var(--warm-soft) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 88%;
+    background-position: 0 92%;
     padding: 0 0.15em;
     color: var(--ink);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .hero-sub {
     font-size: 1.15rem;
@@ -505,40 +512,40 @@ const STRINGS = {
   it: {
     lang: "Italiano",
     dir: "ltr",
-    heroHook: ["Ti senti bloccato? Probabilmente ", { h: "non è colpa tua" }, "."],
-    heroSub: "Career Compass è un consulente di carriera gratuito, senza registrazione, che apri dentro ChatGPT, Claude o qualunque chat AI. Prima capisce dove sei davvero, poi ti dà una o due cose concrete da fare questa settimana. Niente fuffa. La tua lingua. Il tuo ritmo.",
-    mockLabel: "Com'è il primo scambio",
+    heroHook: ["Ti senti bloccato? ", { h: "Probabilmente non dipende da te" }, "."],
+    heroSub: "Career Compass è un consulente di carriera gratuito, senza registrazione, che usi dentro ChatGPT, Claude o qualsiasi altra chat AI. Prima capisce dove sei davvero, poi ti indica una o due cose concrete da fare questa settimana. Niente fuffa. La tua lingua. Il tuo ritmo.",
+    mockLabel: "Com'è un primo scambio",
     bubbleRoleYou: "Tu",
     bubbleRoleAdvisor: "Consulente",
-    bubbleUser: "Sono stato licenziato tre mesi fa. Tutti mi dicono di candidarmi di più. Sono esausto e non funziona niente.",
-    bubbleAdvisor: "Ha senso. Prima di dirti qualsiasi cosa — dimmi dove sei questa settimana. Apri siti di lavoro e non clicchi, clicchi e non ti candidi, o ti candidi e non ti risponde nessuno?",
+    bubbleUser: "Mi hanno licenziato tre mesi fa. Tutti mi dicono di candidarmi di più. Sono esausto e non funziona niente.",
+    bubbleAdvisor: "Ci sta, ed è più comune di quanto pensi. Prima di darti qualsiasi consiglio — dimmi dove sei questa settimana. Apri i siti di lavoro e non clicchi, clicchi e non ti candidi, o ti candidi e non ti risponde nessuno?",
     howto: "Come si usa",
     steps: [
-      "Scegli la tua AI qui sotto.",
-      "Incolla il prompt (Cmd/Ctrl+V) nella chat che si apre, poi inizia a parlare nella tua lingua.",
-      "Alla fine, salva il Riepilogo di Sessione così la prossima conversazione riparte da dove hai lasciato."
+      "Scegli qui sotto la tua AI preferita.",
+      "Incolla il prompt (Cmd/Ctrl+V) nella chat che si apre, poi inizia a scrivere nella tua lingua.",
+      "Alla fine, salva il Riepilogo di Sessione: lo riutilizzerai nella prossima conversazione per ripartire da dove avevi lasciato."
     ],
     or: "oppure",
-    llmHint: "Ogni pulsante copia il prompt e apre la chat in una nuova scheda — basta incollare lì (Cmd/Ctrl+V).",
-    llmCopied: "✓ Copiato — incollalo nella scheda {provider} con Cmd/Ctrl+V",
-    copyBtn: "Copia il prompt e incollalo a mano",
-    copyHint: "Usa questa opzione se i pulsanti sopra non aprono la tua AI preferita, o se vuoi vedere il prompt prima di usarlo.",
-    copied: "✓ Copiato — ora incollalo in una chat AI",
+    llmHint: "Ogni pulsante copia il prompt e apre la chat in una nuova scheda — poi basta incollarlo lì (Cmd/Ctrl+V).",
+    llmCopied: "✓ Copiato — ora incollalo nella scheda di {provider} con Cmd/Ctrl+V",
+    copyBtn: "Copia il prompt e incollalo manualmente",
+    copyHint: "Usa questa opzione se i pulsanti qui sopra non aprono la tua AI preferita, o se vuoi leggere il prompt prima.",
+    copied: "✓ Copiato — ora incollalo in una qualsiasi chat AI",
     copyFailed: "Impossibile caricare il prompt. Apri prompt.md su GitHub.",
     copyPressToCopy: "Premi Ctrl/Cmd+C per copiare",
     who: "Per chi è",
-    whoBody: "Per te, se stai tornando al lavoro dopo una pausa, hai appena perso il lavoro, stai cercando di capire cosa fare dopo, o cerchi per la prima volta. Non è solo per il tech. Funziona in qualsiasi lingua tu scriva. Per adulti (18+).",
+    whoBody: "Per te, se stai tornando al lavoro dopo una pausa, hai appena perso il lavoro, stai cercando di capire cosa fare dopo, o cerchi lavoro per la prima volta. Non è pensato solo per il tech. Funziona in qualsiasi lingua tu scriva. Per adulti (18+).",
     what: "Cosa ottieni",
-    whatBody: "Una conversazione strutturata che ascolta davvero — parte dal capire dove sei, poi ti aiuta a tirare fuori una o due cose specifiche da fare questa settimana. Alla fine, un Riepilogo di Sessione da salvare e reincollare nella prossima chat, così riparti da dove eri.",
-    privacy: "Privacy: la conversazione resta nel tuo account AI. Niente arriva a me, non c'è alcun backend. Il consulente adatta il suo stile a come parli — se glielo chiedi, ti dice cosa sta notando.",
+    whatBody: "Una conversazione strutturata che ascolta davvero: parte dal capire dove sei, poi ti aiuta a definire una o due cose concrete da fare questa settimana. Alla fine, un Riepilogo di Sessione da salvare e reincollare nella prossima chat, per ripartire da dove avevi lasciato.",
+    privacy: "Privacy: la conversazione resta nel tuo account AI. Nulla arriva a me, non c'è alcun backend. Il consulente adatta il suo stile a come parli — se glielo chiedi, ti dice apertamente cosa sta notando.",
     tips: "Consigli",
     tipsList: [
-      "Funziona meglio con la ricerca web attiva nel tuo strumento AI (di solito è attiva di default).",
-      "Non riscriverà il tuo CV al posto tuo. Ti dirà cosa cambiare — i CV scritti dall'AI crollano ai colloqui.",
-      "Non farà candidature di massa. Ti aiuterà a candidarti bene a pochi ruoli mirati."
+      "Funziona meglio con la ricerca web attiva nella tua AI (di solito è attiva di default).",
+      "Non riscriverà il tuo CV al posto tuo. Ti dice cosa cambiare — i CV scritti dall'AI crollano ai colloqui.",
+      "Non farà candidature di massa. Ti aiuta a candidarti bene per pochi ruoli, scelti con cura."
     ],
     feedbackHeading: "Aiutami a migliorarlo",
-    feedbackBody: "Lo sto costruendo alla luce del sole. Se qualcosa ha funzionato, si è rotto, ti ha confuso, o aiuterebbe qualcuno che conosci — dimmelo. Ci vogliono 30 secondi.",
+    feedbackBody: "Lo sto costruendo apertamente. Se qualcosa ha funzionato, si è rotto, ti ha confuso, o potrebbe aiutare qualcuno che conosci — fammelo sapere. Bastano 30 secondi.",
     feedbackBtn: "Lascia un feedback su GitHub",
     more: "Per saperne di più",
     links: [

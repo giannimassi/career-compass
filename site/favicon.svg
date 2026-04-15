@@ -1,11 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="12" fill="#fbf7ee"/>
-  <!-- North point (coral) -->
-  <path d="M32 6 L38 32 L32 32 Z" fill="#d4805c"/>
-  <path d="M32 6 L26 32 L32 32 Z" fill="#c56b48"/>
-  <!-- South point (deep green) -->
-  <path d="M32 58 L38 32 L32 32 Z" fill="#2b5a4a"/>
-  <path d="M32 58 L26 32 L32 32 Z" fill="#224839"/>
+  <!-- North east (lit coral) -->
+  <path d="M32 8 L44 32 L32 32 Z" fill="#d4805c"/>
+  <!-- North west (shadow coral) -->
+  <path d="M32 8 L20 32 L32 32 Z" fill="#b8694a"/>
+  <!-- South east (lit green) -->
+  <path d="M32 56 L44 32 L32 32 Z" fill="#2b5a4a"/>
+  <!-- South west (shadow green) -->
+  <path d="M32 56 L20 32 L32 32 Z" fill="#1e3e33"/>
   <!-- Pivot -->
-  <circle cx="32" cy="32" r="2.8" fill="#1a1a1a"/>
+  <circle cx="32" cy="32" r="2.5" fill="#1a1a1a"/>
 </svg>

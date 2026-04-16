@@ -57,179 +57,58 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  .container {
-    max-width: 580px;
-    margin: 0 auto;
-  }
+  .container { max-width: 580px; margin: 0 auto; }
 
-  /* Welcome hero */
-  .welcome {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  .compass { font-size: 2.5rem; line-height: 1; margin-bottom: 0.75rem; display: block; }
+  /* Welcome — compact */
+  .welcome { text-align: center; margin-bottom: 1.5rem; }
+  .compass { font-size: 2rem; line-height: 1; margin-bottom: 0.5rem; display: block; }
   .welcome h1 {
     font-family: 'Fraunces', serif;
-    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.02em;
-    margin-bottom: 0.6rem;
-    text-wrap: balance;
+    margin-bottom: 0.4rem;
   }
   .welcome .body-text {
     color: var(--ink-soft);
-    font-size: 0.95rem;
-    max-width: 460px;
-    margin: 0 auto 1rem;
-  }
-  .info-box {
-    background: var(--bg-soft);
-    border-radius: 12px;
-    padding: 1rem 1.2rem;
-    border-left: 3px solid var(--accent);
-    text-align: left;
-    margin-bottom: 1.5rem;
-  }
-  .info-box-label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink-softer);
-    margin-bottom: 0.5rem;
-  }
-  .info-box ul {
-    margin: 0;
-    padding-left: 1.2rem;
-    color: var(--ink-soft);
     font-size: 0.9rem;
-  }
-  .info-box li { margin-bottom: 0.3rem; }
-  .info-box li:last-child { margin-bottom: 0; }
-  .footer-note {
-    font-size: 0.78rem;
-    color: var(--ink-softer);
-    text-align: center;
+    max-width: 440px;
+    margin: 0 auto;
   }
 
-  /* Track selection */
-  .track-section { text-align: center; }
-  .track-section h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-  }
-  .track-section .subtitle {
-    color: var(--ink-soft);
-    margin-bottom: 1rem;
-    font-size: 0.88rem;
-  }
-  .track-cards {
+  /* Track toggle */
+  .track-toggle {
     display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-  }
-  @media (max-width: 500px) {
-    .track-cards { flex-direction: column; }
-  }
-  .track-card {
-    flex: 1;
-    background: var(--card);
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    text-align: left;
-  }
-  .track-card:hover { border-color: var(--accent); }
-  .track-card.selected {
-    border-color: var(--accent);
-    box-shadow: var(--shadow);
-  }
-  .track-card h3 {
-    font-family: 'Fraunces', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 0.2rem;
-  }
-  .track-card .time {
-    color: var(--ink-softer);
-    font-size: 0.78rem;
-    margin-bottom: 0.35rem;
-  }
-  .track-card p {
-    color: var(--ink-soft);
-    font-size: 0.85rem;
-  }
-
-  /* Preview */
-  .preview-list {
-    text-align: left;
-    margin-bottom: 1.25rem;
-  }
-  .preview-item {
     background: var(--bg-soft);
-    border-radius: 8px;
-    padding: 0.65rem 0.9rem;
-    margin-bottom: 0.4rem;
-    color: var(--ink-soft);
-    font-size: 0.88rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    border-radius: 10px;
+    padding: 3px;
+    margin: 1.25rem auto;
+    max-width: 340px;
   }
-  .preview-num {
-    background: var(--accent-soft);
-    color: var(--accent);
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.72rem;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-
-  /* Buttons */
-  .btn {
-    display: inline-block;
-    background: var(--accent);
-    color: var(--accent-ink);
+  .track-toggle button {
+    flex: 1;
+    background: none;
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 0.5rem 0.75rem;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.15s;
+    color: var(--ink-soft);
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
   }
-  .btn:hover { opacity: 0.9; }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .track-toggle button.active {
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
 
   /* Progress bar */
-  .progress-section { margin-bottom: 1.5rem; }
-  .progress-label {
-    font-size: 0.82rem;
-    color: var(--ink-softer);
-    margin-bottom: 0.4rem;
-  }
-  .progress-bar {
-    height: 4px;
-    background: var(--bg-soft);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-  }
+  .progress-section { margin-bottom: 1rem; }
+  .progress-label { font-size: 0.8rem; color: var(--ink-softer); margin-bottom: 0.3rem; }
+  .progress-bar { height: 3px; background: var(--bg-soft); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s ease; }
 
   /* Prompt cards */
   .prompt-card {
@@ -238,104 +117,78 @@
     border-radius: 12px;
     margin-bottom: 0.75rem;
     overflow: hidden;
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, border-color 0.2s;
   }
-  .prompt-card.active {
-    box-shadow: var(--shadow);
-    border-color: var(--accent);
-  }
+  .prompt-card.active { box-shadow: var(--shadow); border-color: var(--accent); }
   .prompt-header {
-    padding: 1rem 1.25rem;
+    padding: 0.85rem 1.1rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
+    cursor: default;
   }
   .prompt-num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    flex-shrink: 0;
-    background: var(--bg-soft);
-    color: var(--ink-soft);
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 600; flex-shrink: 0;
+    background: var(--bg-soft); color: var(--ink-soft);
     transition: background 0.2s, color 0.2s;
   }
   .prompt-card.done .prompt-num { background: var(--accent); color: var(--accent-ink); }
   .prompt-card.active .prompt-num { background: var(--warm); color: #fff; }
-  .prompt-question { font-size: 0.92rem; color: var(--ink); flex: 1; }
+  .prompt-question { font-size: 0.9rem; color: var(--ink); flex: 1; }
   .prompt-card.done .prompt-question { color: var(--ink-soft); }
-  .prompt-check { color: var(--accent); font-size: 1.1rem; display: none; }
+  .prompt-check { color: var(--accent); font-size: 1rem; display: none; }
   .prompt-card.done .prompt-check { display: block; }
 
-  .prompt-body { display: none; padding: 0 1.25rem 1.25rem; }
-  .prompt-card.active .prompt-body { display: block; }
+  .prompt-body { display: none; padding: 0 1.1rem 1.1rem; }
+  .prompt-card.active .prompt-body,
   .prompt-card.review .prompt-body { display: block; }
 
   /* Voice */
   .voice-fallback {
-    background: var(--warm-soft);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-    margin-bottom: 0.75rem;
+    background: var(--warm-soft); border-radius: 8px;
+    padding: 0.6rem 0.9rem; font-size: 0.82rem;
+    color: var(--ink-soft); margin-bottom: 0.75rem;
   }
-  .record-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
+  .record-row { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.65rem; }
   .record-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: none;
-    background: var(--danger-soft);
-    color: var(--danger);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s, transform 0.15s;
-    flex-shrink: 0;
+    width: 42px; height: 42px; border-radius: 50%; border: none;
+    background: var(--danger-soft); color: var(--danger);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, transform 0.15s; flex-shrink: 0;
   }
   .record-btn:hover { transform: scale(1.05); }
-  .record-btn.recording {
-    background: var(--danger);
-    color: #fff;
-    animation: pulse 1.5s infinite;
-  }
+  .record-btn.recording { background: var(--danger); color: #fff; animation: pulse 1.5s infinite; }
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.3); }
     50% { box-shadow: 0 0 0 8px rgba(192,57,43,0); }
   }
-  .record-label { font-size: 0.85rem; color: var(--ink-softer); }
+  .record-label { font-size: 0.82rem; color: var(--ink-softer); }
 
   .response-area {
-    width: 100%;
-    min-height: 100px;
-    padding: 0.75rem;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    resize: vertical;
-    margin-bottom: 0.75rem;
+    width: 100%; min-height: 90px; padding: 0.65rem;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--bg); color: var(--ink);
+    font-family: inherit; font-size: 0.88rem; line-height: 1.5;
+    resize: vertical; margin-bottom: 0.65rem;
   }
   .response-area:focus { outline: none; border-color: var(--accent); }
   .response-area.interim { color: var(--ink-softer); }
 
   .prompt-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
-  .review-actions { text-align: center; margin-top: 1rem; margin-bottom: 2rem; }
 
+  /* Buttons */
+  .btn {
+    display: inline-block; background: var(--accent); color: var(--accent-ink);
+    border: none; padding: 0.65rem 1.5rem; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-warm { background: var(--warm); color: #fff; }
+
+  /* Thank you */
   .thankyou { text-align: center; padding: 3rem 1rem; }
   .thankyou h1 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 0.75rem; }
   .thankyou p { color: var(--ink-soft); margin-bottom: 1.5rem; }
@@ -343,85 +196,44 @@
   .thankyou a:hover { text-decoration: underline; }
 
   .hidden { display: none !important; }
+  .footnote { font-size: 0.75rem; color: var(--ink-softer); text-align: center; margin-top: 1rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- Phase: Welcome + Track Selection -->
-  <div id="phase-select">
+  <!-- Main flow -->
+  <div id="phase-main">
     <div class="welcome">
       <span class="compass" aria-hidden="true">🧭</span>
       <h1>Grazie per aver provato Career Compass</h1>
-      <p class="body-text">La tua esperienza conta davvero. Quello che condividi qui mi aiuta a rendere questo strumento più utile per chi si trova nella tua stessa situazione.</p>
-      <div class="info-box">
-        <div class="info-box-label">Come funziona:</div>
-        <ul>
-          <li>Ci vogliono circa 2–5 minuti</li>
-          <li>Puoi registrare la tua voce — niente da scrivere</li>
-          <li>Ti guido con alcune domande semplici</li>
-          <li>Non ci sono risposte giuste o sbagliate</li>
-        </ul>
-      </div>
+      <p class="body-text">La tua esperienza conta. Puoi parlare o scrivere, non ci sono risposte giuste o sbagliate.</p>
     </div>
 
-    <div class="track-section">
-      <h2>Quanto tempo hai?</h2>
-      <p class="subtitle">Puoi sempre parlare o scrivere.</p>
-
-      <div class="track-cards">
-        <div class="track-card" onclick="selectTrack('veloce')" id="card-veloce">
-          <h3>⚡ Veloce</h3>
-          <div class="time">~2 minuti</div>
-          <p>Una domanda aperta sulla tua esperienza</p>
-        </div>
-        <div class="track-card" onclick="selectTrack('approfondito')" id="card-approfondito">
-          <h3>🔍 Approfondito</h3>
-          <div class="time">~5 minuti</div>
-          <p>Ti guido attraverso 4 domande</p>
-        </div>
-      </div>
-
-      <div id="preview">
-        <div id="preview-list" class="preview-list"></div>
-        <button class="btn" onclick="startFlow()">Inizia →</button>
-        <p class="footer-note" style="margin-top:0.75rem;">Il tuo feedback viene salvato come testo, non come audio.</p>
-      </div>
+    <div class="track-toggle">
+      <button id="tog-veloce" class="active" onclick="switchTrack('veloce')">⚡ Veloce · 2 min</button>
+      <button id="tog-approfondito" onclick="switchTrack('approfondito')">🔍 Approfondito · 5 min</button>
     </div>
-  </div>
 
-  <!-- Phase: Recording -->
-  <div id="phase-record" class="hidden">
-    <div class="progress-section">
-      <div class="progress-label" id="progress-label"></div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-    </div>
-    <div id="prompts-container"></div>
     <div id="voice-fallback" class="voice-fallback hidden">
-      Il tuo browser non supporta la registrazione vocale, ma puoi scrivere il tuo feedback qui sotto.
+      Il tuo browser non supporta la registrazione vocale, ma puoi scrivere qui sotto.
     </div>
+
+    <div id="progress-section" class="progress-section hidden">
+      <div class="progress-label" id="progress-label"></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <div id="prompts-container"></div>
+
+    <p class="footnote">Il feedback viene salvato come testo, non come audio.</p>
   </div>
 
-  <!-- Phase: Review -->
-  <div id="phase-review" class="hidden">
-    <h1 style="font-family:'Fraunces',serif; font-size:1.3rem; margin-bottom:0.5rem; text-align:center;">Rivedi il tuo feedback</h1>
-    <p style="color:var(--ink-soft); font-size:0.9rem; text-align:center; margin-bottom:1.25rem;">Puoi modificare le risposte prima di inviare.</p>
-    <div id="review-container"></div>
-    <div class="review-actions">
-      <button class="btn" onclick="submitFinal()">Invia il feedback →</button>
-    </div>
-  </div>
-
-  <!-- Phase: Thank you -->
+  <!-- Thank you -->
   <div id="phase-thanks" class="hidden thankyou">
     <div style="font-size:2.5rem; margin-bottom:1rem;">🙏</div>
     <h1>Grazie!</h1>
@@ -447,60 +259,52 @@ var PROMPTS = {
 };
 
 var state = {
-  track: null,
+  track: 'veloce',
   sessionId: crypto.randomUUID(),
   currentIndex: 0,
-  responses: [],
-  phase: 'select'
+  responses: []
 };
 
 var speechSupported = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 var activeRecognition = null;
 
-// Pre-select veloce on load
+// --- Init: render immediately with veloce ---
 (function init() {
-  selectTrack('veloce');
+  if (!speechSupported) document.getElementById('voice-fallback').classList.remove('hidden');
+  renderPrompts();
 })();
 
-function selectTrack(track) {
+function switchTrack(track) {
+  if (state.track === track) return;
+  // Don't switch if user already started recording in approfondito
   state.track = track;
-  var prompts = PROMPTS[track];
+  state.currentIndex = 0;
+  state.responses = [];
+  state.sessionId = crypto.randomUUID();
 
-  document.getElementById('card-veloce').classList.toggle('selected', track === 'veloce');
-  document.getElementById('card-approfondito').classList.toggle('selected', track === 'approfondito');
+  document.getElementById('tog-veloce').classList.toggle('active', track === 'veloce');
+  document.getElementById('tog-approfondito').classList.toggle('active', track === 'approfondito');
 
-  var previewList = document.getElementById('preview-list');
-  previewList.innerHTML = '';
-  prompts.forEach(function(p, i) {
-    var item = document.createElement('div');
-    item.className = 'preview-item';
-    item.innerHTML = '<div class="preview-num">' + (i + 1) + '</div><span>' + p.text + '</span>';
-    previewList.appendChild(item);
-  });
+  renderPrompts();
 }
 
-function startFlow() {
-  state.phase = 'recording';
-  state.currentIndex = 0;
-  state.responses = PROMPTS[state.track].map(function(p) {
+function renderPrompts() {
+  var prompts = PROMPTS[state.track];
+  var container = document.getElementById('prompts-container');
+  container.innerHTML = '';
+
+  state.responses = prompts.map(function(p) {
     return { promptText: p.text, response: '', inputMethod: 'text', submitted: false };
   });
 
-  document.getElementById('phase-select').classList.add('hidden');
-  document.getElementById('phase-record').classList.remove('hidden');
-
-  if (!speechSupported) {
-    document.getElementById('voice-fallback').classList.remove('hidden');
+  // Show progress bar only for approfondito
+  var progressEl = document.getElementById('progress-section');
+  if (prompts.length > 1) {
+    progressEl.classList.remove('hidden');
+    updateProgress();
+  } else {
+    progressEl.classList.add('hidden');
   }
-
-  buildPromptCards();
-  activatePrompt(0);
-}
-
-function buildPromptCards() {
-  var container = document.getElementById('prompts-container');
-  container.innerHTML = '';
-  var prompts = PROMPTS[state.track];
 
   prompts.forEach(function(p, i) {
     var card = document.createElement('div');
@@ -508,11 +312,13 @@ function buildPromptCards() {
     card.id = 'prompt-' + i;
 
     var isLast = i === prompts.length - 1;
-    var nextLabel = isLast ? 'Rivedi' : 'Avanti \u2192';
+    var isSingle = prompts.length === 1;
+    var nextLabel = isSingle ? 'Invia \u2192' : (isLast ? 'Invia \u2192' : 'Avanti \u2192');
+    var btnClass = isLast ? 'btn btn-warm' : 'btn';
 
     card.innerHTML =
       '<div class="prompt-header">' +
-        '<div class="prompt-num">' + (i + 1) + '</div>' +
+        (prompts.length > 1 ? '<div class="prompt-num">' + (i + 1) + '</div>' : '') +
         '<div class="prompt-question">' + p.text + '</div>' +
         '<div class="prompt-check">\u2713</div>' +
       '</div>' +
@@ -524,33 +330,31 @@ function buildPromptCards() {
             '</button>' +
             '<span class="record-label" id="rec-label-' + i + '">Clicca per registrare</span>' +
           '</div>' : '') +
-        '<textarea class="response-area" id="textarea-' + i + '" placeholder="Il tuo feedback apparir\u00e0 qui..." oninput="onTextInput(' + i + ')"></textarea>' +
+        '<textarea class="response-area" id="textarea-' + i + '" placeholder="' + (speechSupported ? 'Registra o scrivi qui...' : 'Scrivi qui il tuo feedback...') + '" oninput="onTextInput(' + i + ')"></textarea>' +
         '<div class="prompt-actions">' +
-          '<button class="btn" onclick="advancePrompt(' + i + ')" id="advance-' + i + '">' + nextLabel + '</button>' +
+          '<button class="' + btnClass + '" onclick="advancePrompt(' + i + ')">' + nextLabel + '</button>' +
         '</div>' +
       '</div>';
 
     container.appendChild(card);
   });
+
+  // Activate first prompt
+  state.currentIndex = 0;
+  activatePrompt(0);
 }
 
 function activatePrompt(index) {
   state.currentIndex = index;
-  updateProgress();
+  if (PROMPTS[state.track].length > 1) updateProgress();
 
   var prompts = PROMPTS[state.track];
   prompts.forEach(function(_, i) {
     var card = document.getElementById('prompt-' + i);
-    if (i === index) {
-      card.classList.add('active');
-      card.classList.remove('done');
-    } else if (i < index) {
-      card.classList.remove('active');
-      card.classList.add('done');
-    } else {
-      card.classList.remove('active');
-      card.classList.remove('done');
-    }
+    if (!card) return;
+    if (i === index) { card.classList.add('active'); card.classList.remove('done'); }
+    else if (i < index) { card.classList.remove('active'); card.classList.add('done'); }
+    else { card.classList.remove('active'); card.classList.remove('done'); }
   });
 
   var textarea = document.getElementById('textarea-' + index);
@@ -563,13 +367,23 @@ function advancePrompt(index) {
   var textarea = document.getElementById('textarea-' + index);
   state.responses[index].response = textarea.value;
 
+  if (!state.responses[index].response.trim()) {
+    textarea.style.borderColor = 'var(--warm)';
+    textarea.focus();
+    return;
+  }
+
+  // Submit this prompt
   submitResponse(index, false);
 
   var prompts = PROMPTS[state.track];
   if (index < prompts.length - 1) {
     activatePrompt(index + 1);
   } else {
-    showReview();
+    // Final — submit all as final and show thanks
+    state.responses.forEach(function(r, i) { submitResponse(i, true); });
+    document.getElementById('phase-main').classList.add('hidden');
+    document.getElementById('phase-thanks').classList.remove('hidden');
   }
 }
 
@@ -580,12 +394,10 @@ function updateProgress() {
   document.getElementById('progress-fill').style.width = (current / total * 100) + '%';
 }
 
+// --- Voice ---
 function toggleRecord(index) {
-  if (activeRecognition) {
-    stopRecording();
-  } else {
-    startRecording(index);
-  }
+  if (activeRecognition) stopRecording();
+  else startRecording(index);
 }
 
 function startRecording(index) {
@@ -601,27 +413,21 @@ function startRecording(index) {
   var finalTranscript = textarea.value;
 
   btn.classList.add('recording');
-  label.textContent = 'Registrazione in corso... clicca per fermare';
+  label.textContent = 'Registrazione... clicca per fermare';
   state.responses[index].inputMethod = 'voice';
+  textarea.style.borderColor = '';
 
   recognition.onresult = function(event) {
     var interim = '';
     for (var i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal) {
-        finalTranscript += event.results[i][0].transcript + ' ';
-      } else {
-        interim += event.results[i][0].transcript;
-      }
+      if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript + ' ';
+      else interim += event.results[i][0].transcript;
     }
     textarea.value = finalTranscript + interim;
     textarea.classList.toggle('interim', interim.length > 0);
   };
 
-  recognition.onerror = function(event) {
-    console.error('Speech error:', event.error);
-    cleanupRecording(index);
-  };
-
+  recognition.onerror = function() { cleanupRecording(index); };
   recognition.onend = function() {
     if (activeRecognition === recognition) {
       try { recognition.start(); } catch (e) { cleanupRecording(index); }
@@ -631,7 +437,6 @@ function startRecording(index) {
   recognition.start();
   activeRecognition = recognition;
   activeRecognition._index = index;
-  activeRecognition._finalTranscript = finalTranscript;
 }
 
 function stopRecording() {
@@ -648,82 +453,40 @@ function cleanupRecording(index) {
   var label = document.getElementById('rec-label-' + index);
   var textarea = document.getElementById('textarea-' + index);
   if (btn) btn.classList.remove('recording');
-  if (label) label.textContent = 'Clicca per registrare di nuovo';
+  if (label) label.textContent = 'Clicca per registrare';
   if (textarea) textarea.classList.remove('interim');
 }
 
 function onTextInput(index) {
-  if (state.responses[index] && state.responses[index].inputMethod !== 'voice') {
+  var textarea = document.getElementById('textarea-' + index);
+  if (textarea) textarea.style.borderColor = '';
+  if (state.responses[index] && state.responses[index].inputMethod !== 'voice')
     state.responses[index].inputMethod = 'text';
-  }
 }
 
-function showReview() {
-  state.phase = 'review';
-  stopRecording();
-
-  document.getElementById('phase-record').classList.add('hidden');
-  document.getElementById('phase-review').classList.remove('hidden');
-
-  var container = document.getElementById('review-container');
-  container.innerHTML = '';
-
-  state.responses.forEach(function(r, i) {
-    var card = document.createElement('div');
-    card.className = 'prompt-card review';
-
-    card.innerHTML =
-      '<div class="prompt-header">' +
-        '<div class="prompt-num" style="background:var(--accent);color:var(--accent-ink);">' + (i + 1) + '</div>' +
-        '<div class="prompt-question">' + r.promptText + '</div>' +
-      '</div>' +
-      '<div class="prompt-body">' +
-        '<textarea class="response-area" id="review-textarea-' + i + '">' + escapeHtml(r.response) + '</textarea>' +
-      '</div>';
-
-    container.appendChild(card);
-  });
-}
-
+// --- Submit ---
 function submitResponse(index, isFinal) {
   var r = state.responses[index];
-  if (!r.response.trim()) return;
-
-  var payload = {
-    session_id: state.sessionId,
-    timestamp: new Date().toISOString(),
-    track: state.track,
-    prompt_index: index + 1,
-    prompt_text: r.promptText,
-    response: r.response.trim(),
-    is_final: isFinal,
-    input_method: r.inputMethod,
-    user_agent: navigator.userAgent
-  };
+  if (!r || !r.response.trim()) return;
 
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(function(err) {
-    console.error('Submit failed:', err);
-  });
+    body: JSON.stringify({
+      session_id: state.sessionId,
+      timestamp: new Date().toISOString(),
+      track: state.track,
+      prompt_index: index + 1,
+      prompt_text: r.promptText,
+      response: r.response.trim(),
+      is_final: isFinal,
+      input_method: r.inputMethod,
+      user_agent: navigator.userAgent
+    })
+  }).catch(function(err) { console.error('Submit failed:', err); });
 
   r.submitted = true;
-}
-
-function submitFinal() {
-  state.responses.forEach(function(r, i) {
-    var textarea = document.getElementById('review-textarea-' + i);
-    if (textarea) {
-      r.response = textarea.value;
-    }
-    submitResponse(i, true);
-  });
-
-  document.getElementById('phase-review').classList.add('hidden');
-  document.getElementById('phase-thanks').classList.remove('hidden');
 }
 
 function escapeHtml(text) {
